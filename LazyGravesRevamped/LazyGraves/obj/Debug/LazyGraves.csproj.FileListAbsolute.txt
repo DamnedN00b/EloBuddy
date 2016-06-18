@@ -1,0 +1,10 @@
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\LazyGraves.exe.config
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\LazyGraves.exe
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\LazyGraves.pdb
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\EloBuddy.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\EloBuddy.SDK.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\SharpDX.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\bin\Debug\Newtonsoft.Json.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\obj\Debug\LazyGraves.exe
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyGravesRevamped\LazyGraves\obj\Debug\LazyGraves.pdb

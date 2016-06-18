@@ -1,0 +1,11 @@
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\LazyLucian.exe.config
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\LazyLucian.exe
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\LazyLucian.pdb
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\EloBuddy.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\EloBuddy.SDK.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\SharpDX.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\bin\Debug\Newtonsoft.Json.dll
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\obj\Debug\LazyLucian.exe
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\obj\Debug\LazyLucian.pdb
+C:\Users\NOOB\Documents\Visual Studio 2015\Projects\LazyLucianRevamped\LazyLucian\obj\Debug\LazyLucian.csprojResolveAssemblyReference.cache
