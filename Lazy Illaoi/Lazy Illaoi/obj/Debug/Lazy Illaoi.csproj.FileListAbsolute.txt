@@ -8,3 +8,15 @@ C:\Users\NOOB\Documents\Visual Studio 2015\Projects\Lazy Illaoi\Lazy Illaoi\bin\
 C:\Users\NOOB\Documents\Visual Studio 2015\Projects\Lazy Illaoi\Lazy Illaoi\bin\Debug\Newtonsoft.Json.dll
 C:\Users\NOOB\Documents\Visual Studio 2015\Projects\Lazy Illaoi\Lazy Illaoi\obj\Debug\Lazy Illaoi.exe
 C:\Users\NOOB\Documents\Visual Studio 2015\Projects\Lazy Illaoi\Lazy Illaoi\obj\Debug\Lazy Illaoi.pdb
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\Lazy Illaoi.exe.config
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\obj\Debug\Lazy Illaoi.pdb
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\Lazy Illaoi.exe
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\Lazy Illaoi.pdb
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\EloBuddy.dll
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\EloBuddy.SDK.dll
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\SharpDX.dll
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\Newtonsoft.Json.dll
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\bin\Debug\EloBuddy.Sandbox.dll
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\obj\Debug\Lazy Illaoi.csprojResolveAssemblyReference.cache
+C:\Users\NoooB\Desktop\EloBuddy-master\Lazy Illaoi\Lazy Illaoi\obj\Debug\Lazy Illaoi.exe

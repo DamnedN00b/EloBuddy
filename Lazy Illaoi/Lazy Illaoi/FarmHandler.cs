@@ -13,8 +13,8 @@ namespace Lazy_Illaoi
         public static void JungleClear()
         {
             var monster = EntityManager.MinionsAndMonsters.GetJungleMonsters(ObjectManager.Player.ServerPosition,
-                    Spells.Q.Range)
-                    .FirstOrDefault(x => x.IsValidTarget(Spells.Q.Range));
+                Spells.Q.Range)
+                .FirstOrDefault(x => x.IsValidTarget(Spells.Q.Range));
             if (monster == null) return;
             {
                 if (Spells.Q.IsReady() && Init.FarmMenu["useQjungle"].Cast<CheckBox>().CurrentValue)
@@ -40,7 +40,7 @@ namespace Lazy_Illaoi
                     Player.Position, Spells.Q.Range);
             var aiMinions = minions.ToArray();
 
-            if (Spells.Q.IsReady() && 
+            if (Spells.Q.IsReady() &&
                 Player.Mana > Init.FarmMenu["qManaLane"].Cast<Slider>().CurrentValue &&
                 Init.FarmMenu["useQlane"].Cast<CheckBox>().CurrentValue)
             {
@@ -60,8 +60,8 @@ namespace Lazy_Illaoi
 
             if (!Spells.W.IsReady() ||
                 !Init.FarmMenu["useWlane"].Cast<CheckBox>().CurrentValue ||
-                    Player.Mana < Init.FarmMenu["wManaLane"].Cast<Slider>().CurrentValue ||
-                    !aiMinions.Any()) return;
+                Player.Mana < Init.FarmMenu["wManaLane"].Cast<Slider>().CurrentValue ||
+                !aiMinions.Any()) return;
             {
                 foreach (var m in from m in (from m in aiMinions.Where(x => x.Distance(Player) < 450) select m)
                     let tentaclesNearMinion = Events.TentacleList.Count(x => x.Distance(m) < Spells.Q.Range)

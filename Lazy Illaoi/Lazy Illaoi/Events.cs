@@ -34,7 +34,8 @@ namespace Lazy_Illaoi
                 HarassHandler.Harass();
             }
 
-            else if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear) || Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
+            else if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear) ||
+                     Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
             {
                 FarmHandler.LaneClear();
                 FarmHandler.JungleClear();
@@ -124,7 +125,7 @@ namespace Lazy_Illaoi
                     return;
 
                 if (minion.IsAlly && minion.BaseSkinName.ToLower().Equals("illaoiminion"))
-                    TentacleList.Add(minion);
+                    Core.DelayAction(() => TentacleList.Add(minion), 1500);
             }
         }
 
@@ -141,26 +142,25 @@ namespace Lazy_Illaoi
             {
                 foreach (var tentacle in TentacleList.Where(t => t.IsValid && t.IsVisible && t.IsHPBarRendered))
                 {
-                    new Circle { Color = Color.DarkViolet, Radius = Spells.Q.Range }.Draw(tentacle.Position);
+                    new Circle {Color = Color.DarkViolet, Radius = Spells.Q.Range}.Draw(tentacle.Position);
                 }
             }
             if (Init.DrawMenu["drawQ"].Cast<CheckBox>().CurrentValue && (Spells.Q.IsReady() && Spells.Q.IsLearned))
             {
-                new Circle { Color = Color.Chartreuse, Radius = Spells.Q.Range }.Draw(Player.Position);
+                new Circle {Color = Color.Chartreuse, Radius = Spells.Q.Range}.Draw(Player.Position);
             }
             if (Init.DrawMenu["drawW"].Cast<CheckBox>().CurrentValue && (Spells.W.IsReady() && Spells.W.IsLearned))
             {
-                new Circle { Color = Color.Black, Radius = 450 }.Draw(Player.Position);
+                new Circle {Color = Color.Black, Radius = 450}.Draw(Player.Position);
             }
             if (Init.DrawMenu["drawE"].Cast<CheckBox>().CurrentValue && (Spells.E.IsReady() && Spells.E.IsLearned))
             {
-                new Circle { Color = Color.Firebrick, Radius = Spells.E.Range }.Draw(Player.Position);
+                new Circle {Color = Color.Firebrick, Radius = Spells.E.Range}.Draw(Player.Position);
             }
             if (Init.DrawMenu["drawR"].Cast<CheckBox>().CurrentValue && (Spells.R.IsReady() && Spells.R.IsLearned))
             {
-                new Circle { Color = Color.DarkBlue, Radius = Spells.R.Range }.Draw(Player.Position);
+                new Circle {Color = Color.DarkBlue, Radius = Spells.R.Range}.Draw(Player.Position);
             }
-
         }
     }
 }

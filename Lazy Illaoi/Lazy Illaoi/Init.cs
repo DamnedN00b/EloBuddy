@@ -48,7 +48,8 @@ namespace Lazy_Illaoi
 
             ComboMenu.AddLabel("R - Leap of Faith");
             ComboMenu.Add("useR", new CheckBox("Use R Logic"));
-            ComboMenu.Add("useR#", new Slider("if enemies in range (or 1v1 with ghost)", 2, 0, 5));
+            ComboMenu.Add("useR#", new Slider("if enemies in range", 2, 0, 5));
+            ComboMenu.Add("useRghost", new CheckBox("only if Ghost in Range"));
             ComboMenu.AddSeparator();
 
             //-------------------------------------------------------------------------------------------------------------------
