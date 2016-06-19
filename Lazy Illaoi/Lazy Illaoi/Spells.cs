@@ -15,8 +15,8 @@ namespace Lazy_Illaoi
         public static Spell.Skillshot Q = new Spell.Skillshot(SpellSlot.Q, 850, SkillShotType.Linear, 750, int.MaxValue,
             100);
 
-        public static Spell.Active W = new Spell.Active(SpellSlot.W, 300);
-        public static Spell.Skillshot E = new Spell.Skillshot(SpellSlot.E, 950, SkillShotType.Linear, 250, 1900, 50);
+        public static Spell.Active W = new Spell.Active(SpellSlot.W, 400);
+        public static Spell.Skillshot E = new Spell.Skillshot(SpellSlot.E, 900, SkillShotType.Linear, 250, 1900, 50);
         public static Spell.Active R = new Spell.Active(SpellSlot.R, 450);
 
         public static void CastQ()
@@ -79,17 +79,17 @@ namespace Lazy_Illaoi
 
             if (!W.IsReady()) return;
 
-            if (target != null && (target.IsValidTarget(450) && !target.IsDead || !target.IsZombie))
+            if (target != null && (target.IsValidTarget(W.Range) && !target.IsDead || !target.IsZombie))
             {
                 var tentaclesNearTarget = Events.TentacleList.Count(x => x.Distance(target) <= Q.Range);
                 if (tentaclesNearTarget != 0)
                     W.Cast();
             }
 
-            if ((target != null && target.IsValidTarget(450)) || ghost == null) return;
+            if ((target != null && target.IsValidTarget(W.Range)) || ghost == null) return;
             {
                 var tentaclesNearGhost = Events.TentacleList.Count(x => x.Distance(ghost) <= Q.Range);
-                if (tentaclesNearGhost != 0 && ghost.Distance(Player) <= 450)
+                if (tentaclesNearGhost != 0 && ghost.Distance(Player) <= W.Range)
                     W.Cast();
             }
         }
