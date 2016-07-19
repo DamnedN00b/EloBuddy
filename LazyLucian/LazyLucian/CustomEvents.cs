@@ -27,7 +27,7 @@ namespace LazyLucian
             switch (args.Slot)
             {
                 case SpellSlot.R:
-                    if (Program.Player.InventoryItems.HasItem(ItemId.Youmuus_Ghostblade))
+                    if (Program.Player.InventoryItems.HasItem((int)ItemId.Youmuus_Ghostblade))
                     {
                         Youmuu.Cast();
                     }

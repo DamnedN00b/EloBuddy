@@ -28,7 +28,7 @@ namespace LazyLucian
             // Listen to events we need
             Game.OnUpdate += OnUpdate;
             Obj_AI_Base.OnSpellCast += CustomEvents.OnSpellCast;
-            //Obj_AI_Base.OnProcessSpellCast += CustomEvents.OnProcessSpellCast;
+            Obj_AI_Base.OnProcessSpellCast += CustomEvents.OnProcessSpellCast;
             //Obj_AI_Base.OnBuffGain += CustomEvents.OnBuffGain;
             //Obj_AI_Base.OnBuffLose += CustomEvents.OnBuffLose;
             //Game.OnTick += Skin;
