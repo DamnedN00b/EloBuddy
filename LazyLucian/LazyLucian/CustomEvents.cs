@@ -15,7 +15,7 @@ namespace LazyLucian
             switch (args.Slot)
             {
                 case SpellSlot.Q:
-                    Orbwalker.ResetAutoAttack();
+                    Core.DelayAction(Orbwalker.ResetAutoAttack, 250);
                     break;
             }
         }
