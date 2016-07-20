@@ -16,7 +16,7 @@ namespace LazyLucian.Modes
 
         public override void Execute()
         {
-            if (Settings.UseQ && Q.IsReady() && Program.Player.ManaPercent > Settings.UseQmana &&
+            if (Settings.UseQ && Q.IsReady() && Program.Player.ManaPercent >= Settings.UseQmana &&
                 !(Settings.SpellWeaving &&
                   (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
                    Orbwalker.IsAutoAttacking)))
@@ -38,7 +38,7 @@ namespace LazyLucian.Modes
                 }
             }
 
-            if (!Settings.UseW || !W.IsReady() || Program.Player.ManaPercent < Settings.UseWmana ||
+            if (!Settings.UseW || !W.IsReady() || !(Program.Player.ManaPercent >= Settings.UseWmana) ||
                 Settings.SpellWeaving &&
                 (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() || Orbwalker.IsAutoAttacking))
                 return;

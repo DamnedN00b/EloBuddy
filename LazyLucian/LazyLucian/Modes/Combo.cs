@@ -28,19 +28,45 @@ namespace LazyLucian.Modes
                 return;
 
             if (SpellManager.E.IsReady() && Settings.UseE && Program.Player.ManaPercent >= Settings.UseEmana &&
-                target.IsValidTarget(500 + SpellManager.E.Range) &&
-                //Game.CursorPos.IsSafePosition() &&
+                target.IsValidTarget(500 + SpellManager.E.Range))
+
+                if (!(Settings.SpellWeaving &&
+                      (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
+                       Orbwalker.IsAutoAttacking || CustomEvents.PassiveUp)) &&
+                    !(Program.Player.Distance(target) <= SpellManager.Q.Range && Q.IsReady()))
+                {
+                    SpellManager.E.Cast((Vector3) Program.Player.Position.Extend(Game.CursorPos, SpellManager.E.Range));
+                }
+
+            CastQw();
+            
+            if (SpellManager.R.IsReady() && Settings.UseR && target.IsValidTarget(SpellManager.R.Range) &&
+                (target.HasBuffOfType(BuffType.Snare) || target.HasBuffOfType(BuffType.Stun)) &&
+                !Program.Player.HasBuff("LucianR") &&
                 !(Settings.SpellWeaving &&
                   (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
                    Orbwalker.IsAutoAttacking)))
             {
-                SpellManager.E.Cast((Vector3) Program.Player.Position.Extend(Game.CursorPos, SpellManager.E.Range));
+                SpellManager.R.Cast(target);
             }
+        }
 
-            if (SpellManager.Q.IsReady() &&
+        public void CastQw()
+        {
+            var target = TargetSelector.SelectedTarget != null &&
+                         TargetSelector.SelectedTarget.Distance(ObjectManager.Player) <
+                         SpellManager.Q1.Range + SpellManager.E.Range
+                ? TargetSelector.SelectedTarget
+                : TargetSelector.GetTarget(SpellManager.Q1.Range + SpellManager.E.Range, DamageType.Physical);
+
+            if (target == null || target.IsZombie ||
+                target.HasBuffOfType(BuffType.Invulnerability) || !(SpellManager.E.IsOnCooldown))
+                return;
+
+            if (SpellManager.Q.IsReady() && !Program.Player.Spellbook.IsCastingSpell &&
                 !(Settings.SpellWeaving &&
                   (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
-                   Orbwalker.IsAutoAttacking))
+                   Orbwalker.IsAutoAttacking || CustomEvents.PassiveUp))
                 )
             {
                 if (Settings.UseQ && Program.Player.ManaPercent >= Settings.UseQmana &&
@@ -93,10 +119,10 @@ namespace LazyLucian.Modes
             }
 
             if (SpellManager.W.IsReady() && Settings.UseW && Program.Player.ManaPercent >= Settings.UseWmana &&
-                target.IsValidTarget(600) &&
+                target.IsValidTarget(600) && !Program.Player.Spellbook.IsCastingSpell &&
                 !(Settings.SpellWeaving &&
                   (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
-                   Orbwalker.IsAutoAttacking))
+                   Orbwalker.IsAutoAttacking || CustomEvents.PassiveUp))
                 )
             {
                 var wPred = SpellManager.W.GetPrediction(target);
@@ -105,16 +131,6 @@ namespace LazyLucian.Modes
                 if (wPred.HitChance != HitChance.Collision || !wPred.CollisionObjects.Any()) return;
                 if (wPred.CollisionObjects.FirstOrDefault().Distance(target) <= 40)
                     SpellManager.W.Cast(target.ServerPosition);
-            }
-
-            if (SpellManager.R.IsReady() && Settings.UseR && target.IsValidTarget(SpellManager.R.Range) &&
-                (target.HasBuffOfType(BuffType.Snare) || target.HasBuffOfType(BuffType.Stun)) &&
-                !Program.Player.HasBuff("LucianR") &&
-                !(Settings.SpellWeaving &&
-                  (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
-                   Orbwalker.IsAutoAttacking)))
-            {
-                SpellManager.R.Cast(target);
             }
         }
     }

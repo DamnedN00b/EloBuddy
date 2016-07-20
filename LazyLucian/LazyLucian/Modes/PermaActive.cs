@@ -28,7 +28,7 @@ namespace LazyLucian.Modes
                 return;
 
             if (SpellManager.E.IsReady() && Q.IsReady(1000) &&
-                target.Health <= Program.Player.GetSpellDamage(target, SpellSlot.Q))
+                target.Health < Program.Player.GetSpellDamage(target, SpellSlot.Q) + Program.Player.GetAutoAttackDamage(target)*2)
             {
                 if (Settings.UseE && target.IsValidTarget(500 + SpellManager.E.Range) &&
                     Game.CursorPos.IsSafePosition())
@@ -37,7 +37,7 @@ namespace LazyLucian.Modes
                 }
             }
 
-            if (SpellManager.Q.IsReady() && target.Health <= Program.Player.GetSpellDamage(target, SpellSlot.Q))
+            if (SpellManager.Q.IsReady() && target.Health < Program.Player.GetSpellDamage(target, SpellSlot.Q))
 
             {
                 if (Settings.UseQ && target.IsValidTarget(SpellManager.Q.Range))
@@ -88,7 +88,7 @@ namespace LazyLucian.Modes
             }
 
             if (SpellManager.W.IsReady() && Settings.UseW && target.IsValidTarget(SpellManager.W.Range) &&
-                target.Health <= Program.Player.GetSpellDamage(target, SpellSlot.W))
+                target.Health < Program.Player.GetSpellDamage(target, SpellSlot.W))
             {
                 var wPred = SpellManager.W.GetPrediction(target);
                 if (wPred.HitChance >= HitChance.Medium)
