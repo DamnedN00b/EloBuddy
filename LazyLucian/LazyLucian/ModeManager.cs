@@ -27,10 +27,12 @@ namespace LazyLucian
 
             // Listen to events we need
             Game.OnUpdate += OnUpdate;
+            Game.OnTick += Config.Modes.Skins.DoMagic;
             Obj_AI_Base.OnSpellCast += CustomEvents.OnSpellCast;
             Obj_AI_Base.OnProcessSpellCast += CustomEvents.OnProcessSpellCast;
             Obj_AI_Base.OnBuffGain += CustomEvents.OnBuffGain;
             Obj_AI_Base.OnBuffLose += CustomEvents.OnBuffLose;
+            Obj_AI_Base.OnPlayAnimation += CustomEvents.OnPlayAnimation;
             //Game.OnTick += Skin;
             //Obj_AI_Base.OnBuffGain += Buffs;
         }
@@ -59,6 +61,7 @@ namespace LazyLucian
         private static void OnUpdate(EventArgs args)
         {
             // Execute all modes
+
             Modes.ForEach(mode =>
             {
                 try

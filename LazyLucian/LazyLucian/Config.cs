@@ -1,4 +1,6 @@
-﻿using EloBuddy.SDK.Menu;
+﻿using System;
+using EloBuddy;
+using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
 // ReSharper disable MemberHidesStaticFromOuterClass
@@ -35,6 +37,7 @@ namespace LazyLucian
                 JungleClearMenu,
                 LastHitMenu,
                 FleeMenu,
+                SkinMenu,
                 PermaActiveMenu;
 
             static Modes()
@@ -45,6 +48,7 @@ namespace LazyLucian
                 JungleClearMenu = Menu.AddSubMenu("JungleClear");
                 LastHitMenu = Menu.AddSubMenu("LastHit");
                 FleeMenu = Menu.AddSubMenu("Flee");
+                SkinMenu = Menu.AddSubMenu("Skins");
                 PermaActiveMenu = Menu.AddSubMenu("PermaActive");
 
                 // Initialize all modes
@@ -68,6 +72,8 @@ namespace LazyLucian
 
                 //PermaActive
                 PermaActive.Initialize();
+
+
             }
 
             public static void Initialize()
@@ -288,6 +294,32 @@ namespace LazyLucian
                 }
             }
 
+            public static class Skins
+            {
+                private static readonly ComboBox SkinID;
+
+                static Skins()
+                {
+                    SkinMenu.AddGroupLabel("Skins");
+                    SkinMenu.Add("useSkin", new CheckBox("Use Skin"));
+                    SkinID = SkinMenu.Add("skinID", new ComboBox("Currently used:", 3, "Classic Lucian", "Hired Gun Lucian", "Striker Lucian", "Chroma Yellow", "Chroma Red"
+                        ,"Chroma Blue", "PROJECT: Lucian" ));
+                    SkinMenu.AddSeparator(10);
+                }
+
+                public static void DoMagic(EventArgs args)
+                {
+                    if (SkinMenu["useSkin"].Cast<CheckBox>().CurrentValue)
+                    {
+                        Player.SetSkinId(SkinMenu["skinID"].Cast<ComboBox>().CurrentValue);
+                    }
+                }
+
+                public static void Initialize()
+                {
+                }
+            }
+
             public static class LastHit
             {
                 private static readonly CheckBox _useQ;
@@ -312,9 +344,6 @@ namespace LazyLucian
 
                 public static bool UseQ => _useQ.CurrentValue;
                 public static bool UseW => _useW.CurrentValue;
-                //public static bool UseE => _useE.CurrentValue;
-
-                //public static bool UseR => _useR.CurrentValue;
 
                 public static bool SpellWeaving => _spellWeaving.CurrentValue;
 

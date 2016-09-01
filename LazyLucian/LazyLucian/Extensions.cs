@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX;
 
@@ -26,6 +27,13 @@ namespace LazyLucian
                 EntityManager.Heroes.Enemies.Count(enemy => enemy.Distance(position) <= 1000 && enemy.HealthPercent < 30);
 
             return allies + alliedTurrets - lowAllies + 1 > enemies - lowEnemies + enemyTurrets;
+        }
+
+        public static bool IsKillable(this Obj_AI_Base target, float range)
+        {
+            return !target.HasBuff("kindredrnodeathbuff") && !target.Buffs.Any(b => b.Name.ToLower().Contains("fioraw")) && !target.HasBuff("JudicatorIntervention")
+                   && !target.HasBuff("ChronoShift") && !target.HasBuff("UndyingRage") && !target.IsInvulnerable && !target.IsZombie && !target.HasBuff("bansheesveil") && !target.IsDead
+                   && !target.IsPhysicalImmune && target.Health > 0 && !target.HasBuffOfType(BuffType.Invulnerability) && !target.HasBuffOfType(BuffType.PhysicalImmunity) && target.IsValidTarget(range);
         }
     }
 }
