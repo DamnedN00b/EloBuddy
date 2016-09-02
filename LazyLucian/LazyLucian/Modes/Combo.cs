@@ -26,8 +26,7 @@ namespace LazyLucian.Modes
                 if (!(Settings.SpellWeaving &&
                       (Program.Player.HasBuff("LucianPassiveBuff") || Program.Player.IsDashing() ||
                        Orbwalker.IsAutoAttacking || CustomEvents.PassiveUp)) &&
-                    !(Program.Player.Distance(enemy) <= SpellManager.Q.Range &&
-                      (Q.IsReady() && enemy.Distance(Program.Player) < Program.Player.GetAutoAttackRange())))
+                    !(enemy.IsKillable(Q.Range) && Q.IsReady()) && E.IsReady() && Settings.UseE)
                 {
                     SpellManager.E.Cast((Vector3) Program.Player.Position.Extend(Game.CursorPos, SpellManager.E.Range));
                 }
