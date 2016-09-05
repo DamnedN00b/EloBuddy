@@ -7,12 +7,6 @@ namespace LazyLucian
 {
     public static class Extensions
     {
-        /*
-        public static bool HasPassiveBuff(this AIHeroClient target)
-        {
-            return target.HasBuff(("lucianpassivebuff").ToLower());
-        }*/
-
         public static bool IsSafePosition(this Vector3 position)
         {
             var enemyTurrets =

@@ -139,9 +139,6 @@ namespace LazyLucian
                 private static readonly Slider _useQ1mana;
                 private static readonly CheckBox _useW;
                 private static readonly Slider _useWmana;
-                //private static readonly CheckBox _useE;
-                //private static readonly Slider _useEmana;
-                //private static readonly CheckBox _useR;
 
                 static Harass()
                 {
@@ -155,10 +152,6 @@ namespace LazyLucian
                     _useW = HarassMenu.Add("harassUseW", new CheckBox("Use W"));
                     _useWmana = HarassMenu.Add("harassUseWmana", new Slider("Mana %"));
                     HarassMenu.AddSeparator(10);
-                    //_useE = HarassMenu.Add("harassUseE", new CheckBox("Use E"));
-                    //HarassMenu.AddSeparator(10);
-                    //_useR = HarassMenu.Add("harassUseR", new CheckBox("Use R", false)); // Default false
-                    //HarassMenu.AddSeparator(10);
                     _spellWeaving = HarassMenu.Add("harassSpellWeaving", new CheckBox("Use SpellWeaving"));
                 }
 
@@ -168,11 +161,6 @@ namespace LazyLucian
                 public static int UseQ1mana => _useQ1mana.CurrentValue;
                 public static bool UseW => _useW.CurrentValue;
                 public static int UseWmana => _useWmana.CurrentValue;
-                //public static bool UseE => _useE.CurrentValue;
-
-                //public static int UseEmana => _useEmana.CurrentValue;
-
-                //public static bool UseR => _useR.CurrentValue;
 
                 public static bool SpellWeaving => _spellWeaving.CurrentValue;
 
@@ -183,28 +171,20 @@ namespace LazyLucian
 
             public static class Flee
             {
-                //private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
-                //private static readonly CheckBox _useR;
 
                 static Flee()
                 {
                     FleeMenu.AddGroupLabel("Flee");
-                    //_useQ = FleeMenu.Add("fleeUseQ", new CheckBox("Use Q"));
-                    //FleeMenu.AddSeparator(10);
                     _useW = FleeMenu.Add("fleeUseW", new CheckBox("Use W to get speed buff"));
                     FleeMenu.AddSeparator(10);
                     _useE = FleeMenu.Add("fleeUseE", new CheckBox("Use E to mouse"));
                     FleeMenu.AddSeparator(10);
-                    //_useR = FleeMenu.Add("fleeUseR", new CheckBox("Use R", false)); // Default false
                 }
-
-                //public static bool UseQ => _useQ.CurrentValue;
 
                 public static bool UseW => _useW.CurrentValue;
                 public static bool UseE => _useE.CurrentValue;
-                //public static bool UseR => _useR.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -217,9 +197,6 @@ namespace LazyLucian
                 private static readonly Slider _useQmana;
                 private static readonly CheckBox _useW;
                 private static readonly Slider _useWmana;
-                //private static readonly CheckBox _useE;
-                //private static readonly Slider _useEmana;
-                //private static readonly CheckBox _useR;
                 private static readonly CheckBox _spellWeaving;
 
                 static LaneClear()
@@ -231,10 +208,6 @@ namespace LazyLucian
                     _useW = LaneClearMenu.Add("laneClearUseW", new CheckBox("Use W"));
                     _useWmana = LaneClearMenu.Add("laneClearUseWmana", new Slider("Mana %"));
                     LaneClearMenu.AddSeparator(10);
-                    //_useE = LaneClearMenu.Add("laneClearUseE", new CheckBox("Use E"));
-                    //LaneClearMenu.AddSeparator(10);
-                    //_useR = LaneClearMenu.Add("laneClearUseR", new CheckBox("Use R", false)); // Default false
-                    //LaneClearMenu.AddSeparator(10);
                     _spellWeaving = LaneClearMenu.Add("laneClearSpellWeaving", new CheckBox("Use SpellWeaving"));
                 }
 
@@ -242,9 +215,6 @@ namespace LazyLucian
                 public static int UseQmana => _useQmana.CurrentValue;
                 public static bool UseW => _useW.CurrentValue;
                 public static int UseWmana => _useWmana.CurrentValue;
-                //public static bool UseE => _useE.CurrentValue;
-
-                //public static bool UseR => _useR.CurrentValue;
 
                 public static bool SpellWeaving => _spellWeaving.CurrentValue;
 
@@ -259,8 +229,6 @@ namespace LazyLucian
                 private static readonly Slider _useQmana;
                 private static readonly CheckBox _useW;
                 private static readonly Slider _useWmana;
-                //private static readonly CheckBox _useE;
-                //private static readonly CheckBox _useR;
                 private static readonly CheckBox _spellWeaving;
 
                 static JungleClear()
@@ -272,10 +240,6 @@ namespace LazyLucian
                     _useW = JungleClearMenu.Add("jungleClearUseW", new CheckBox("Use W"));
                     _useWmana = JungleClearMenu.Add("jungleClearUseWmana", new Slider("Mana %"));
                     JungleClearMenu.AddSeparator(10);
-                    //_useE = JungleClearMenu.Add("jungleClearUseE", new CheckBox("Use E"));
-                    //JungleClearMenu.AddSeparator(10);
-                    //_useR = JungleClearMenu.Add("jungleClearUseR", new CheckBox("Use R", false)); // Default false
-                    //JungleClearMenu.AddSeparator(10);
                     _spellWeaving = JungleClearMenu.Add("jungleClearSpellWeaving", new CheckBox("Use SpellWeaving"));
                 }
 
@@ -283,9 +247,6 @@ namespace LazyLucian
                 public static int UseQmana => _useQmana.CurrentValue;
                 public static bool UseW => _useW.CurrentValue;
                 public static int UseWmana => _useWmana.CurrentValue;
-                //public static bool UseE => _useE.CurrentValue;
-
-                //public static bool UseR => _useR.CurrentValue;
 
                 public static bool SpellWeaving => _spellWeaving.CurrentValue;
 
@@ -296,6 +257,7 @@ namespace LazyLucian
 
             public static class Skins
             {
+                // ReSharper disable once NotAccessedField.Local
                 private static readonly ComboBox SkinID;
 
                 static Skins()
@@ -324,8 +286,6 @@ namespace LazyLucian
             {
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
-                //private static readonly CheckBox _useE;
-                //private static readonly CheckBox _useR;
                 private static readonly CheckBox _spellWeaving;
 
                 static LastHit()
@@ -335,10 +295,6 @@ namespace LazyLucian
                     LastHitMenu.AddSeparator(10);
                     _useW = LastHitMenu.Add("lastHitUseW", new CheckBox("Use W"));
                     LastHitMenu.AddSeparator(10);
-                    //_useE = LastHitMenu.Add("lastHitUseE", new CheckBox("Use E"));
-                    //LastHitMenu.AddSeparator(10);
-                    //_useR = LastHitMenu.Add("lastHitUseR", new CheckBox("Use R", false)); // Default false
-                    //LastHitMenu.AddSeparator(10);
                     _spellWeaving = LastHitMenu.Add("lastHitSpellWeaving", new CheckBox("Use SpellWeaving"));
                 }
 
@@ -358,7 +314,6 @@ namespace LazyLucian
                 private static readonly CheckBox _useQ1;
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
-                //private static readonly CheckBox _useR;
 
                 static PermaActive()
                 {
@@ -376,15 +331,12 @@ namespace LazyLucian
                     _useE = PermaActiveMenu.Add("permaActiveUseE",
                         new CheckBox("Use E to get in range for securing Kills"));
                     PermaActiveMenu.AddSeparator(10);
-
-                    //_useR = PermaActiveMenu.Add("permaActiveUseR", new CheckBox("Use R", false)); // Default false
                 }
 
                 public static bool UseQ => _useQ.CurrentValue;
                 public static bool UseQ1 => _useQ1.CurrentValue;
                 public static bool UseW => _useW.CurrentValue;
                 public static bool UseE => _useE.CurrentValue;
-                //public static bool UseR => _useR.CurrentValue;
 
                 public static void Initialize()
                 {

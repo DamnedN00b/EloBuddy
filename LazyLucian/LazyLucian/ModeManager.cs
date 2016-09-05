@@ -33,25 +33,9 @@ namespace LazyLucian
             Obj_AI_Base.OnBuffGain += CustomEvents.OnBuffGain;
             Obj_AI_Base.OnBuffLose += CustomEvents.OnBuffLose;
             Obj_AI_Base.OnPlayAnimation += CustomEvents.OnPlayAnimation;
-            //Game.OnTick += Skin;
-            //Obj_AI_Base.OnBuffGain += Buffs;
         }
 
         private static List<ModeBase> Modes { get; }
-        /*
-        private static void Skin(EventArgs args)
-        {
-            Player.SetSkinId(2);
-        }
-        
-        private static void Buffs(Obj_AI_Base sender, Obj_AI_BaseBuffGainEventArgs args)
-        {
-            if (sender.IsMe && sender.Type == GameObjectType.AIHeroClient)
-            {
-                Chat.Print(args.Buff.Name);
-            }
-        }
-        */
 
         public static void Initialize()
         {
@@ -75,7 +59,6 @@ namespace LazyLucian
                 }
                 catch (Exception e)
                 {
-                    // Please enable the debug window to see and solve the exceptions that might occur!
                     Logger.Log(LogLevel.Error, "Error executing mode '{0}'\n{1}", mode.GetType().Name, e);
                 }
             });
