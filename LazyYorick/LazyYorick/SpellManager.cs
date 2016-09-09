@@ -9,13 +9,12 @@ namespace LazyYorick
         static SpellManager()
         {
             Q = new Spell.Active(SpellSlot.Q, (uint) Player.Instance.GetAutoAttackRange());
-            W = new Spell.Skillshot(SpellSlot.W, 600, SkillShotType.Circular, 250, 1450, 250);
+            W = new Spell.Skillshot(SpellSlot.W, 600, SkillShotType.Circular, 750, 1200, 200);
             {
                 W.AllowedCollisionCount = int.MaxValue;
             }
-            E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Cone, 0, 500, 60);
+            E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Circular, 500, 1200, 200);
             {
-                E.ConeAngleDegrees = 60;
                 E.AllowedCollisionCount = int.MaxValue;
             }
             R = new Spell.Skillshot(SpellSlot.R, 700, SkillShotType.Circular, 250, 2000, 300);

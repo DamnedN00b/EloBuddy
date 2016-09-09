@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using EloBuddy;
+﻿using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Events;
 using SharpDX;
 
 namespace LazyYorick.Modes
@@ -28,7 +26,7 @@ namespace LazyYorick.Modes
                         SpellManager.W.Radius, SpellManager.W.CastDelay, SpellManager.W.Speed,
                         Player.Instance.ServerPosition, true);
 
-                    if (//Settings.UseWenemy && Program.Player.ManaPercent >= Settings.UseWselfMana &&
+                    if ( //Settings.UseWenemy && Program.Player.ManaPercent >= Settings.UseWselfMana &&
                         enemyWpred.CastPosition.IsValid())
                     {
                         W.Cast(enemyWpred.CastPosition);
@@ -40,9 +38,10 @@ namespace LazyYorick.Modes
             {
                 if (enemyE != null)
                 {
-                    var enemyEpred = Prediction.Position.PredictConeSpell(enemyE, E.Range, 60, 250, 1200, (Vector3?)enemyE.ServerPosition.Extend(Player.Instance, 150));
+                    var enemyEpred = Prediction.Position.PredictCircularMissile(enemyE, E.Range, E.Radius, E.CastDelay, 1200,
+                        (Vector3?) enemyE.ServerPosition.Extend(Player.Instance, 200));
 
-                    if (//Settings.UseEenemy && Program.Player.ManaPercent >= Settings.UseEmana &&
+                    if ( //Settings.UseEenemy && Program.Player.ManaPercent >= Settings.UseEmana &&
                         (enemyEpred.CastPosition.IsValid() && enemyE.IsKillable(E.Range + 120)))
                     {
                         E.Cast(enemyEpred.CastPosition);

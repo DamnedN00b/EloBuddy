@@ -14,7 +14,7 @@ namespace LazyYorick
     {
         private const string MenuName = "Lazy Yorick";
         private static readonly Menu Menu;
-        private static readonly Menu DrawMenu;
+        //private static readonly Menu DrawMenu;
 
         static Config()
         {

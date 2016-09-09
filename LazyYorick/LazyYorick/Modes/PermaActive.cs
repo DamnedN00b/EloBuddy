@@ -13,10 +13,10 @@ namespace LazyYorick.Modes
 
         public override void Execute()
         {
-            if (Events.Graves.Count >= 3 && Q.IsReady() //&& Settings.UseQghoulsAuto
+            if (Events.Graves.Count >= 4 && Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name == "YorickQ2" //&& Settings.UseQghoulsAuto
                 )
             {
-                Q.Cast();
+                Core.DelayAction(() => Q.Cast(), Game.Ping);
             }
 
             if (W.IsReady())

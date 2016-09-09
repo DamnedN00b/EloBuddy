@@ -35,7 +35,7 @@ namespace LazyYorick
         Orbwalker.OnPostAttack += delegate (AttackableUnit target, EventArgs args)
             {
                 if (!SpellManager.Q.IsReady()) return;
-                if (target.Type == GameObjectType.AIHeroClient)
+                if (target.Type == GameObjectType.AIHeroClient && (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2") && Events.Graves.Count < 4)
                     SpellManager.Q.Cast();
             };
 
@@ -47,7 +47,7 @@ namespace LazyYorick
                         return;
 
                     if (!marker.IsAlly ||
-                        !(marker.Distance(Player.Instance) < 900))
+                        !(marker.Distance(Player.Instance) < 600))
                         return;
 
                     Graves.Add((Obj_AI_Minion) marker);
