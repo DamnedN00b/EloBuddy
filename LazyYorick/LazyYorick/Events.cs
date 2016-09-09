@@ -28,7 +28,6 @@ namespace LazyYorick
                 {
                     if (!sender.IsMe || sender.IsDead) return;
                     if (args.Animation != "Spell1") return;
-                    Chat.Say("/d");
                     Orbwalker.ResetAutoAttack();
                 }
             };
@@ -36,7 +35,7 @@ namespace LazyYorick
         Orbwalker.OnPostAttack += delegate (AttackableUnit target, EventArgs args)
             {
                 if (!SpellManager.Q.IsReady()) return;
-                if (target.Type == GameObjectType.AIHeroClient || target.Type == GameObjectType.obj_AI_Minion && target.Health < Player.Instance.GetSpellDamage(target as Obj_AI_Base, SpellSlot.Q))
+                if (target.Type == GameObjectType.AIHeroClient || (target.Type == GameObjectType.obj_AI_Minion && target.Health < Player.Instance.GetSpellDamage(target as Obj_AI_Base, SpellSlot.Q)))
                     SpellManager.Q.Cast();
             };
 
