@@ -7,7 +7,7 @@ using EloBuddy.SDK.Menu.Values;
 
 // ReSharper disable MemberHidesStaticFromOuterClass
 // ReSharper disable InconsistentNaming
-/*
+
 namespace LazyYorick
 {
     public static class Config
@@ -22,15 +22,17 @@ namespace LazyYorick
             Menu.AddGroupLabel("Enjoy Lazy Yorick :)");
             Menu.AddLabel("Good luck, have fun!");
 
-            Modes.Initialize();
+            //Modes.Initialize();
 
-            DrawMenu = Menu.AddSubMenu("Drawings");
+            //DrawMenu = Menu.AddSubMenu("Drawings");
         }
 
         public static void Initialize()
         {
         }
+    }
 
+    /*
         public static class Modes
         {
             /// <summary>
@@ -368,11 +370,11 @@ namespace LazyYorick
                 public static bool UseW => _useW.CurrentValue;
                 public static bool UseE => _useE.CurrentValue;
                 public static bool UseR => _useR.CurrentValue;
-
+                
                 public static void Initialize()
                 {
                 }
             }
         }
-    }
-}*/
+    }*/
+}
