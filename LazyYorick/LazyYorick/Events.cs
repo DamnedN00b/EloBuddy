@@ -23,13 +23,10 @@ namespace LazyYorick
         static Events()
         {
 
-            Obj_AI_Base.OnPlayAnimation += delegate(Obj_AI_Base sender, GameObjectPlayAnimationEventArgs args)
+            Obj_AI_Base.OnProcessSpellCast += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
             {
-                {
-                    if (!sender.IsMe || sender.IsDead) return;
-                    if (args.Animation != "Spell1") return;
-                    Orbwalker.ResetAutoAttack();
-                }
+                if (sender.IsMe && args.Slot == SpellSlot.Q)
+                Orbwalker.ResetAutoAttack();
             };
 
         Orbwalker.OnPostAttack += delegate (AttackableUnit target, EventArgs args)
