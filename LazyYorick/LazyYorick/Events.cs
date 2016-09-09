@@ -32,8 +32,13 @@ namespace LazyYorick
         Orbwalker.OnPostAttack += delegate (AttackableUnit target, EventArgs args)
             {
                 if (!SpellManager.Q.IsReady()) return;
-                if (target.Type == GameObjectType.AIHeroClient && (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2") && Events.Graves.Count < 4)
+                if (target?.Type == GameObjectType.AIHeroClient && (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2") && Events.Graves.Count < 4)
+                {
                     SpellManager.Q.Cast();
+                    return;
+                }
+
+                Utility.CastItems();
             };
 
             GameObject.OnCreate += delegate(GameObject sender, EventArgs args)
