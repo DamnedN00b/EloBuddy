@@ -70,8 +70,6 @@ namespace LazyYorick
                     }
                 }
 
-                Orbwalker.MoveTo(Game.CursorPos);
-
                 Utility.CastItems();
             };
 

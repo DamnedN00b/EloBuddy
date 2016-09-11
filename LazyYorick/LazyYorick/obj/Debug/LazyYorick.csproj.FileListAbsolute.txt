@@ -8,7 +8,6 @@ C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyYorick\LazyYorick\bin\Debug\SharpDX
 C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyYorick\LazyYorick\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyYorick\LazyYorick\obj\Debug\LazyYorick.exe
 C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyYorick\LazyYorick\obj\Debug\LazyYorick.pdb
-C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyYorick\LazyYorick\obj\Debug\LazyYorick.csprojResolveAssemblyReference.cache
 C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\bin\Debug\LazyYorick.exe.config
 C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\bin\Debug\LazyYorick.exe
 C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\bin\Debug\LazyYorick.pdb
