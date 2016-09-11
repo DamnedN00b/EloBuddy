@@ -41,8 +41,6 @@ namespace LazyYorick
 
             Orbwalker.OnPostAttack += delegate(AttackableUnit target, EventArgs args)
             {
-                Orbwalker.MoveTo(Game.CursorPos);
-
                 if (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name == "YorickQ2") return;
 
                 if (SpellManager.Q.IsReady())
@@ -71,7 +69,9 @@ namespace LazyYorick
                         return;
                     }
                 }
-                
+
+                Orbwalker.MoveTo(Game.CursorPos);
+
                 Utility.CastItems();
             };
 
