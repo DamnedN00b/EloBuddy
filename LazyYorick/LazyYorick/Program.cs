@@ -11,7 +11,6 @@ namespace LazyYorick
     public static class Program
     {
         public const string ChampName = "Yorick";
-        public static AIHeroClient Player = ObjectManager.Player;
 
         /// <summary>
         /// </summary>
@@ -22,32 +21,19 @@ namespace LazyYorick
         }
 
         /// <summary>
-        /// fires after Loading completed
+        ///     fires after <see cref="Loading" /> completed
         /// </summary>
         /// <param name="args"></param>
         private static void OnLoadingComplete(EventArgs args)
         {
-            if (Player.ChampionName != ChampName)
+            if (Player.Instance.ChampionName != ChampName)
             {
                 return;
             }
 
-            // Initialize the classes that we need
             SpellManager.Initialize();
             ModeManager.Initialize();
             Events.Initialize();
-
-            // Listen to events we need
-            Drawing.OnDraw += OnDraw;
-        }
-
-        /// <summary>
-        /// Drawing.OnDraw
-        /// </summary>
-        /// <param name="args"></param>
-        private static void OnDraw(EventArgs args)
-        {
-            Circle.Draw(Color.LightYellow, SpellManager.Q.Range, Player.Position);
         }
     }
 }

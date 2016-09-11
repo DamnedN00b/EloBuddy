@@ -1,8 +1,7 @@
-﻿using System;
-using EloBuddy;
-using EloBuddy.SDK.Menu;
+﻿using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
+// ReSharper disable StringLiteralsWordIsNotInDictionary
 // ReSharper disable IdentifierWordIsNotInDictionary
 
 // ReSharper disable MemberHidesStaticFromOuterClass
@@ -14,7 +13,6 @@ namespace LazyYorick
     {
         private const string MenuName = "Lazy Yorick";
         private static readonly Menu Menu;
-        //private static readonly Menu DrawMenu;
 
         static Config()
         {
@@ -22,22 +20,19 @@ namespace LazyYorick
             Menu.AddGroupLabel("Enjoy Lazy Yorick :)");
             Menu.AddLabel("Good luck, have fun!");
 
-            //Modes.Initialize();
-
-            //DrawMenu = Menu.AddSubMenu("Drawings");
+            Modes.Initialize();
         }
 
         public static void Initialize()
         {
         }
-    }
 
-    /*
         public static class Modes
         {
             /// <summary>
+            ///     <see cref="Initialize" /> <see cref="Menu" /> for each Mode
             /// </summary>
-            private static readonly Menu 
+            private static readonly Menu
                 ComboMenu,
                 HarassMenu,
                 LaneClearMenu,
@@ -45,6 +40,7 @@ namespace LazyYorick
                 LastHitMenu,
                 FleeMenu,
                 SkinMenu,
+                DrawMenu,
                 PermaActiveMenu;
 
             static Modes()
@@ -55,6 +51,7 @@ namespace LazyYorick
                 JungleClearMenu = Menu.AddSubMenu("JungleClear");
                 LastHitMenu = Menu.AddSubMenu("LastHit");
                 FleeMenu = Menu.AddSubMenu("Flee");
+                DrawMenu = Menu.AddSubMenu("Drawings");
                 SkinMenu = Menu.AddSubMenu("Skins");
                 PermaActiveMenu = Menu.AddSubMenu("PermaActive");
 
@@ -72,15 +69,19 @@ namespace LazyYorick
                 JungleClear.Initialize();
 
                 //LastHit
-                //LastHit.Initialize();
+                LastHit.Initialize();
 
                 //Flee
                 Flee.Initialize();
 
+                //Skins
+                Skins.Initialize();
+
                 //PermaActive
                 PermaActive.Initialize();
 
-
+                //Drawings
+                Drawings.Initialize();
             }
 
             public static void Initialize()
@@ -89,48 +90,75 @@ namespace LazyYorick
 
             public static class Combo
             {
-                private static readonly CheckBox _spellWeaving;
                 private static readonly CheckBox _useQ;
+                private static readonly ComboBox _useQmode;
                 private static readonly Slider _useQmana;
-                private static readonly CheckBox _useQ1;
-                private static readonly Slider _useQ1mana;
                 private static readonly CheckBox _useW;
-                private static readonly Slider _useWmana;
+                private static readonly CheckBox _useWenemy;
+                private static readonly Slider _useWenemyMana;
+                private static readonly CheckBox _useWself;
+                private static readonly Slider _useWselfMana;
+                private static readonly Slider _useWselfHP;
+                private static readonly Slider _useWselfEnemiesAround;
                 private static readonly CheckBox _useE;
+                private static readonly ComboBox _useEmode;
                 private static readonly Slider _useEmana;
                 private static readonly CheckBox _useR;
+                private static readonly Slider _useRmana;
 
                 static Combo()
                 {
                     ComboMenu.AddGroupLabel("Combo");
-                    _useQ = ComboMenu.Add("comboUseQ", new CheckBox("Use Q on Target"));
-                    _useQmana = ComboMenu.Add("comboUseQmana", new Slider("Mana %"));
+
+                    _useQ = ComboMenu.Add("useQ", new CheckBox("Use Q"));
                     ComboMenu.AddSeparator(10);
-                    _useQ1 = ComboMenu.Add("comboUseQ1", new CheckBox("Use extended Q"));
-                    _useQ1mana = ComboMenu.Add("comboUseQ1mana", new Slider("Mana %"));
+
+                    _useQmode = ComboMenu.Add("useQmode", new ComboBox("Q Mode:", 1, "Always", "After Attack"));
+                    _useQmana = ComboMenu.Add("useQmana", new Slider("If Mana % > {0}", 0, 0, 100));
+                    ComboMenu.AddSeparator(20);
+
+                    _useW = ComboMenu.Add("useW", new CheckBox("Use W"));
                     ComboMenu.AddSeparator(10);
-                    _useW = ComboMenu.Add("comboUseW", new CheckBox("Use W"));
-                    _useWmana = ComboMenu.Add("comboUseWmana", new Slider("Mana %"));
+
+                    _useWenemy = ComboMenu.Add("useWenemy", new CheckBox("Use on Target"));
+                    _useWenemyMana = ComboMenu.Add("useWenemyMana", new Slider("If Mana % > {0}", 0, 0, 100));
                     ComboMenu.AddSeparator(10);
-                    _useE = ComboMenu.Add("comboUseE", new CheckBox("Use E to MousePosition"));
-                    _useEmana = ComboMenu.Add("comboUseEmana", new Slider("Mana %"));
+
+                    _useWself = ComboMenu.Add("useWself", new CheckBox("Use on self"));
+                    _useWselfMana = ComboMenu.Add("useWselfMana", new Slider("If Mana % > {0}", 0, 0, 100));
+                    _useWselfHP = ComboMenu.Add("useWselfHP", new Slider("If HP % < {0}", 15, 0, 100));
+                    _useWselfEnemiesAround = ComboMenu.Add("useWselfEnemiesAround",
+                        new Slider("If Enemies around >= {0}", 1, 0, 5));
+                    ComboMenu.AddSeparator(20);
+
+                    _useE = ComboMenu.Add("useE", new CheckBox("Use E"));
                     ComboMenu.AddSeparator(10);
-                    _useR = ComboMenu.Add("comboUseR", new CheckBox("Use R on stunned/rooted enemies", false));
-                    // Default false
+
+                    _useEmode = ComboMenu.Add("useEmode", new ComboBox("E Mode:", 1, "Always", "Only with Ghouls"));
+                    _useEmana = ComboMenu.Add("useEmana", new Slider("If Mana % > {0}", 0, 0, 100));
+                    ComboMenu.AddSeparator(20);
+
+                    _useR = ComboMenu.Add("useR", new CheckBox("Use R", false));
                     ComboMenu.AddSeparator(10);
-                    _spellWeaving = ComboMenu.Add("comboSpellWeaving", new CheckBox("Use SpellWeaving"));
+
+                    _useRmana = ComboMenu.Add("useRmana", new Slider("If Mana % > {0}", 0, 0, 100));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static int UseQmana => _useQmana.CurrentValue;
-                public static bool UseQ1 => _useQ1.CurrentValue;
-                public static int UseQ1mana => _useQ1mana.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-                public static int UseWmana => _useWmana.CurrentValue;
-                public static bool UseE => _useE.CurrentValue;
-                public static int UseEmana => _useEmana.CurrentValue;
-                public static bool UseR => _useR.CurrentValue;
-                public static bool SpellWeaving => _spellWeaving.CurrentValue;
+                public static bool useQ => _useQ.CurrentValue;
+                public static int useQmana => _useQmana.CurrentValue;
+                public static int useQmode => _useQmode.CurrentValue;
+                public static bool useW => _useW.CurrentValue;
+                public static bool useWenemy => _useWenemy.CurrentValue;
+                public static int useWenemyMana => _useWenemyMana.CurrentValue;
+                public static bool useWself => _useWself.CurrentValue;
+                public static int useWselfMana => _useWselfMana.CurrentValue;
+                public static int useWselfHp => _useWselfHP.CurrentValue;
+                public static int useWselfEnemiesAround => _useWselfEnemiesAround.CurrentValue;
+                public static bool useE => _useE.CurrentValue;
+                public static int useEmode => _useEmode.CurrentValue;
+                public static int useEmana => _useEmana.CurrentValue;
+                public static bool useR => _useR.CurrentValue;
+                public static int useRmana => _useRmana.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -139,37 +167,65 @@ namespace LazyYorick
 
             public static class Harass
             {
-                private static readonly CheckBox _spellWeaving;
                 private static readonly CheckBox _useQ;
+                private static readonly ComboBox _useQmode;
                 private static readonly Slider _useQmana;
-                private static readonly CheckBox _useQ1;
-                private static readonly Slider _useQ1mana;
                 private static readonly CheckBox _useW;
-                private static readonly Slider _useWmana;
+                private static readonly CheckBox _useWenemy;
+                private static readonly Slider _useWenemyMana;
+                private static readonly CheckBox _useWself;
+                private static readonly Slider _useWselfMana;
+                private static readonly Slider _useWselfHP;
+                private static readonly Slider _useWselfEnemiesAround;
+                private static readonly CheckBox _useE;
+                private static readonly ComboBox _useEmode;
+                private static readonly Slider _useEmana;
 
                 static Harass()
                 {
                     HarassMenu.AddGroupLabel("Harass");
-                    _useQ = HarassMenu.Add("harassUseQ", new CheckBox("Use Q"));
-                    _useQmana = HarassMenu.Add("harassUseQmana", new Slider("Mana %"));
+
+                    _useQ = HarassMenu.Add("useQ", new CheckBox("Use Q"));
                     HarassMenu.AddSeparator(10);
-                    _useQ1 = HarassMenu.Add("harassUseQ1", new CheckBox("Use extended Q"));
-                    _useQ1mana = HarassMenu.Add("harassUseQ1mana", new Slider("Mana %"));
+
+                    _useQmode = HarassMenu.Add("useQmode", new ComboBox("Q Mode:", 1, "Always", "After Attack"));
+                    _useQmana = HarassMenu.Add("useQmana", new Slider("If Mana % > {0}", 60, 0, 100));
+                    HarassMenu.AddSeparator(20);
+
+                    _useW = HarassMenu.Add("useW", new CheckBox("Use W"));
                     HarassMenu.AddSeparator(10);
-                    _useW = HarassMenu.Add("harassUseW", new CheckBox("Use W"));
-                    _useWmana = HarassMenu.Add("harassUseWmana", new Slider("Mana %"));
+
+                    _useWenemy = HarassMenu.Add("useWenemy", new CheckBox("Use on Target"));
+                    _useWenemyMana = HarassMenu.Add("useWenemyMana", new Slider("If Mana % > {0}", 60, 0, 100));
                     HarassMenu.AddSeparator(10);
-                    _spellWeaving = HarassMenu.Add("harassSpellWeaving", new CheckBox("Use SpellWeaving"));
+
+                    _useWself = HarassMenu.Add("useWself", new CheckBox("Use on self"));
+                    _useWselfMana = HarassMenu.Add("useWselfMana", new Slider("If Mana % > {0}", 0, 0, 100));
+                    _useWselfHP = HarassMenu.Add("useWselfHP", new Slider("If HP % < {0}", 15, 0, 100));
+                    _useWselfEnemiesAround = HarassMenu.Add("useWselfEnemiesAround",
+                        new Slider("If Enemies around >= {0}", 1, 0, 5));
+                    HarassMenu.AddSeparator(20);
+
+                    _useE = HarassMenu.Add("useE", new CheckBox("Use E"));
+                    HarassMenu.AddSeparator(10);
+
+                    _useEmode = HarassMenu.Add("useEmode", new ComboBox("E Mode:", 1, "Always", "Only with Ghouls"));
+                    _useEmana = HarassMenu.Add("useEmana", new Slider("If Mana % > {0}", 60, 0, 100));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static int UseQmana => _useQmana.CurrentValue;
-                public static bool UseQ1 => _useQ1.CurrentValue;
-                public static int UseQ1mana => _useQ1mana.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-                public static int UseWmana => _useWmana.CurrentValue;
-
-                public static bool SpellWeaving => _spellWeaving.CurrentValue;
+                public static bool useQ => _useQ.CurrentValue;
+                public static int useQmana => _useQmana.CurrentValue;
+                public static int useQmode => _useQmode.CurrentValue;
+                public static bool useW => _useW.CurrentValue;
+                public static bool useWenemy => _useWenemy.CurrentValue;
+                public static int useWenemyMana => _useWenemyMana.CurrentValue;
+                public static bool useWself => _useWself.CurrentValue;
+                public static int useWselfMana => _useWselfMana.CurrentValue;
+                public static int useWselfHp => _useWselfHP.CurrentValue;
+                public static int useWselfEnemiesAround => _useWselfEnemiesAround.CurrentValue;
+                public static bool useE => _useE.CurrentValue;
+                public static int useEmode => _useEmode.CurrentValue;
+                public static int useEmana => _useEmana.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -179,19 +235,14 @@ namespace LazyYorick
             public static class Flee
             {
                 private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
 
                 static Flee()
                 {
                     FleeMenu.AddGroupLabel("Flee");
-                    _useW = FleeMenu.Add("fleeUseW", new CheckBox("Use W to get speed buff"));
-                    FleeMenu.AddSeparator(10);
-                    _useE = FleeMenu.Add("fleeUseE", new CheckBox("Use E to mouse"));
-                    FleeMenu.AddSeparator(10);
+                    _useW = FleeMenu.Add("useW", new CheckBox("Use W"));
                 }
 
-                public static bool UseW => _useW.CurrentValue;
-                public static bool UseE => _useE.CurrentValue;
+                public static bool useW => _useW.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -201,29 +252,36 @@ namespace LazyYorick
             public static class LaneClear
             {
                 private static readonly CheckBox _useQ;
+                private static readonly ComboBox _useQmode;
                 private static readonly Slider _useQmana;
-                private static readonly CheckBox _useW;
-                private static readonly Slider _useWmana;
-                private static readonly CheckBox _spellWeaving;
+                private static readonly CheckBox _useE;
+                private static readonly ComboBox _useEmode;
+                private static readonly Slider _useEmana;
 
                 static LaneClear()
                 {
                     LaneClearMenu.AddGroupLabel("LaneClear");
-                    _useQ = LaneClearMenu.Add("laneClearUseQ", new CheckBox("Use Q"));
-                    _useQmana = LaneClearMenu.Add("laneClearUseQmana", new Slider("Mana %"));
+
+                    _useQ = LaneClearMenu.Add("useQ", new CheckBox("Use Q"));
                     LaneClearMenu.AddSeparator(10);
-                    _useW = LaneClearMenu.Add("laneClearUseW", new CheckBox("Use W"));
-                    _useWmana = LaneClearMenu.Add("laneClearUseWmana", new Slider("Mana %"));
+                    _useQmode = LaneClearMenu.Add("useQmode",
+                        new ComboBox("Q Mode:", 2, "Always", "After Attack", "Only killable"));
+                    _useQmana = LaneClearMenu.Add("useQmana", new Slider("If Mana % > {0}", 40, 0, 100));
+                    LaneClearMenu.AddSeparator(20);
+
+                    _useE = LaneClearMenu.Add("useE", new CheckBox("Use E"));
                     LaneClearMenu.AddSeparator(10);
-                    _spellWeaving = LaneClearMenu.Add("laneClearSpellWeaving", new CheckBox("Use SpellWeaving"));
+
+                    _useEmode = LaneClearMenu.Add("useEmode", new ComboBox("E Mode:", 1, "Always", "Only with Ghouls"));
+                    _useEmana = LaneClearMenu.Add("useEmana", new Slider("If Mana % > {0}", 40, 0, 100));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static int UseQmana => _useQmana.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-                public static int UseWmana => _useWmana.CurrentValue;
-
-                public static bool SpellWeaving => _spellWeaving.CurrentValue;
+                public static bool useQ => _useQ.CurrentValue;
+                public static int useQmana => _useQmana.CurrentValue;
+                public static int useQmode => _useQmode.CurrentValue;
+                public static bool useE => _useE.CurrentValue;
+                public static int useEmode => _useEmode.CurrentValue;
+                public static int useEmana => _useEmana.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -233,29 +291,37 @@ namespace LazyYorick
             public static class JungleClear
             {
                 private static readonly CheckBox _useQ;
+                private static readonly ComboBox _useQmode;
                 private static readonly Slider _useQmana;
-                private static readonly CheckBox _useW;
-                private static readonly Slider _useWmana;
-                private static readonly CheckBox _spellWeaving;
+                private static readonly CheckBox _useE;
+                private static readonly ComboBox _useEmode;
+                private static readonly Slider _useEmana;
 
                 static JungleClear()
                 {
                     JungleClearMenu.AddGroupLabel("JungleClear");
-                    _useQ = JungleClearMenu.Add("jungleClearUseQ", new CheckBox("Use Q"));
-                    _useQmana = JungleClearMenu.Add("jungleClearUseQmana", new Slider("Mana %"));
+
+                    _useQ = JungleClearMenu.Add("useQ", new CheckBox("Use Q"));
                     JungleClearMenu.AddSeparator(10);
-                    _useW = JungleClearMenu.Add("jungleClearUseW", new CheckBox("Use W"));
-                    _useWmana = JungleClearMenu.Add("jungleClearUseWmana", new Slider("Mana %"));
+
+                    _useQmode = JungleClearMenu.Add("useQmode",
+                        new ComboBox("Q Mode:", 2, "Always", "After Attack", "Only killable"));
+                    _useQmana = JungleClearMenu.Add("useQmana", new Slider("If Mana % > {0}", 0, 0, 100));
+                    JungleClearMenu.AddSeparator(20);
+
+                    _useE = JungleClearMenu.Add("useE", new CheckBox("Use E"));
                     JungleClearMenu.AddSeparator(10);
-                    _spellWeaving = JungleClearMenu.Add("jungleClearSpellWeaving", new CheckBox("Use SpellWeaving"));
+
+                    _useEmode = JungleClearMenu.Add("useEmode", new ComboBox("E Mode:", 1, "Always", "Only with Ghouls"));
+                    _useEmana = JungleClearMenu.Add("useEmana", new Slider("If Mana % > {0}", 0, 0, 100));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static int UseQmana => _useQmana.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-                public static int UseWmana => _useWmana.CurrentValue;
-
-                public static bool SpellWeaving => _spellWeaving.CurrentValue;
+                public static bool useQ => _useQ.CurrentValue;
+                public static int useQmana => _useQmana.CurrentValue;
+                public static int useQmode => _useQmode.CurrentValue;
+                public static bool useE => _useE.CurrentValue;
+                public static int useEmode => _useEmode.CurrentValue;
+                public static int useEmana => _useEmana.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -264,25 +330,19 @@ namespace LazyYorick
 
             public static class Skins
             {
-                // ReSharper disable once NotAccessedField.Local
-                private static readonly ComboBox SkinID;
+                private static readonly CheckBox _useSkin;
+                private static readonly ComboBox _skinID;
 
                 static Skins()
                 {
-                    SkinMenu.AddGroupLabel("Skins");
-                    SkinMenu.Add("useSkin", new CheckBox("Use Skin"));
-                    SkinID = SkinMenu.Add("skinID", new ComboBox("Currently used:", 3, "Classic Lucian", "Hired Gun Lucian", "Striker Lucian", "Chroma Yellow", "Chroma Red"
-                        , "Chroma Blue", "PROJECT: Lucian"));
+                    _useSkin = SkinMenu.Add("useSkin", new CheckBox("Use Skin"));
                     SkinMenu.AddSeparator(10);
+
+                    _skinID = SkinMenu.Add("skinID", new ComboBox("Skin:", 2, "Classic", "Undertaker", "Pentakill"));
                 }
 
-                public static void DoMagic(EventArgs args)
-                {
-                    if (SkinMenu["useSkin"].Cast<CheckBox>().CurrentValue)
-                    {
-                        Player.SetSkinId(SkinMenu["skinID"].Cast<ComboBox>().CurrentValue);
-                    }
-                }
+                public static bool useSkin => _useSkin.CurrentValue;
+                public static int skinID => _skinID.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -292,23 +352,20 @@ namespace LazyYorick
             public static class LastHit
             {
                 private static readonly CheckBox _useQ;
-                private static readonly CheckBox _useW;
-                private static readonly CheckBox _spellWeaving;
+                private static readonly Slider _useQmana;
 
                 static LastHit()
                 {
                     LastHitMenu.AddGroupLabel("LastHit");
-                    _useQ = LastHitMenu.Add("lastHitUseQ", new CheckBox("Use Q"));
+
+                    _useQ = LastHitMenu.Add("useQ", new CheckBox("Use Q"));
                     LastHitMenu.AddSeparator(10);
-                    _useW = LastHitMenu.Add("lastHitUseW", new CheckBox("Use W"));
-                    LastHitMenu.AddSeparator(10);
-                    _spellWeaving = LastHitMenu.Add("lastHitSpellWeaving", new CheckBox("Use SpellWeaving"));
+
+                    _useQmana = LastHitMenu.Add("useQmana", new Slider("If Mana % > {0}", 0, 0, 100));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-
-                public static bool SpellWeaving => _spellWeaving.CurrentValue;
+                public static bool useQ => _useQ.CurrentValue;
+                public static int useQmana => _useQmana.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -317,33 +374,28 @@ namespace LazyYorick
 
             public static class PermaActive
             {
-                private static readonly CheckBox _useQ;
-                private static readonly CheckBox _useQ1;
-                private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
+                private static readonly CheckBox _useQks;
+                private static readonly CheckBox _useEks;
+                private static readonly CheckBox _useQghouls;
+                private static readonly Slider _useQghoulsValue;
 
                 static PermaActive()
                 {
-                    PermaActiveMenu.AddGroupLabel("PermaActive");
+                    _useQghouls = PermaActiveMenu.Add("useQghouls", new CheckBox("Use Q to summon ghouls"));
+                    _useQghoulsValue = PermaActiveMenu.Add("useQghoulsValue",
+                        new Slider("If Graves around: {0}", 4, 3, 4));
+                    PermaActiveMenu.AddSeparator(20);
 
-                    _useQ = PermaActiveMenu.Add("permaActiveUseQ", new CheckBox("Use Q to secure Kills"));
+                    _useQks = PermaActiveMenu.Add("useQks", new CheckBox("Use Q to ks"));
                     PermaActiveMenu.AddSeparator(10);
 
-                    _useQ1 = PermaActiveMenu.Add("permaActiveUseQ1", new CheckBox("Use extended Q to secure Kills"));
-                    PermaActiveMenu.AddSeparator(10);
-
-                    _useW = PermaActiveMenu.Add("permaActiveUseW", new CheckBox("Use W to secure Kills"));
-                    PermaActiveMenu.AddSeparator(10);
-
-                    _useE = PermaActiveMenu.Add("permaActiveUseE",
-                        new CheckBox("Use E to get in range for securing Kills"));
-                    PermaActiveMenu.AddSeparator(10);
+                    _useEks = PermaActiveMenu.Add("useEks", new CheckBox("Use E to ks"));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static bool UseQ1 => _useQ1.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-                public static bool UseE => _useE.CurrentValue;
+                public static bool useQks => _useQks.CurrentValue;
+                public static bool useEks => _useEks.CurrentValue;
+                public static bool useQghouls => _useQghouls.CurrentValue;
+                public static int useQghoulsValue => _useQghoulsValue.CurrentValue;
 
                 public static void Initialize()
                 {
@@ -352,29 +404,40 @@ namespace LazyYorick
 
             public static class Drawings
             {
-                private static readonly CheckBox _useQ;
-                private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
-                private static readonly CheckBox _useR;
+                private static readonly CheckBox _disable;
+                private static readonly ComboBox _drawMode;
+                private static readonly CheckBox _drawQ;
+                private static readonly CheckBox _drawW;
+                private static readonly CheckBox _drawE;
+                private static readonly CheckBox _drawR;
 
                 static Drawings()
                 {
                     DrawMenu.AddGroupLabel("Drawings");
-                    _useQ = DrawMenu.Add("drawQ", new CheckBox("Draw Q"));
-                    _useW = DrawMenu.Add("drawW", new CheckBox("Draw W"));
-                    _useE = DrawMenu.Add("drawE", new CheckBox("Draw E"));
-                    _useR = DrawMenu.Add("drawR", new CheckBox("Draw R"));
+
+                    _disable = DrawMenu.Add("disable", new CheckBox("Disable all drawings", false));
+                    DrawMenu.AddSeparator(10);
+
+                    _drawMode = DrawMenu.Add("skinID", new ComboBox("Draw:", 0, "Only ready", "always"));
+                    DrawMenu.AddSeparator(10);
+
+                    _drawQ = DrawMenu.Add("drawQ", new CheckBox("Draw Q"));
+                    _drawW = DrawMenu.Add("drawW", new CheckBox("Draw W"));
+                    _drawE = DrawMenu.Add("drawE", new CheckBox("Draw E"));
+                    _drawR = DrawMenu.Add("drawR", new CheckBox("Draw R"));
                 }
 
-                public static bool UseQ => _useQ.CurrentValue;
-                public static bool UseW => _useW.CurrentValue;
-                public static bool UseE => _useE.CurrentValue;
-                public static bool UseR => _useR.CurrentValue;
-                
+                public static bool disable => _disable.CurrentValue;
+                public static int drawMode => _drawMode.CurrentValue;
+                public static bool drawQ => _drawQ.CurrentValue;
+                public static bool drawW => _drawW.CurrentValue;
+                public static bool drawE => _drawE.CurrentValue;
+                public static bool drawR => _drawR.CurrentValue;
+
                 public static void Initialize()
                 {
                 }
             }
         }
-    }*/
+    }
 }

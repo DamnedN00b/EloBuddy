@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -14,7 +13,8 @@ namespace LazyYorick
     public static class Extensions
     {
         /// <summary>
-        ///     Returns <see langword="true" /> if you can deal damage to the target.
+        ///     Returns <see langword="true" /> if you can deal damage to the
+        ///     target.
         /// </summary>
         public static bool IsKillable(this AIHeroClient target)
         {
@@ -28,7 +28,8 @@ namespace LazyYorick
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if you can deal damage to the target.
+        ///     Returns <see langword="true" /> if you can deal damage to the
+        ///     target.
         /// </summary>
         public static bool IsKillable(this Obj_AI_Base target, float range)
         {
@@ -41,7 +42,8 @@ namespace LazyYorick
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if you can deal damage to the target.
+        ///     Returns <see langword="true" /> if you can deal damage to the
+        ///     target.
         /// </summary>
         public static bool IsKillable(this Obj_AI_Base target)
         {
@@ -58,13 +60,12 @@ namespace LazyYorick
         /// </summary>
         public static void Cast(this Spell.Skillshot spell, Obj_AI_Base target, HitChance hitChance)
         {
-            if (target != null && spell.IsReady() && target.IsKillable(spell.Range))
+            if (target == null || !spell.IsReady() || !target.IsKillable(spell.Range)) return;
+
+            var pred = spell.GetPrediction(target);
+            if (pred.HitChance >= hitChance || target.IsCc())
             {
-                var pred = spell.GetPrediction(target);
-                if (pred.HitChance >= hitChance || target.IsCc())
-                {
-                    spell.Cast(pred.CastPosition);
-                }
+                spell.Cast(pred.CastPosition);
             }
         }
 
@@ -73,13 +74,12 @@ namespace LazyYorick
         /// </summary>
         public static void Cast(this Spell.SpellBase spell, Obj_AI_Base target, HitChance hitChance)
         {
-            if (target != null && spell.IsReady() && target.IsKillable(spell.Range))
+            if (target == null || !spell.IsReady() || !target.IsKillable(spell.Range)) return;
+
+            var pred = spell.GetPrediction(target);
+            if (pred.HitChance >= hitChance || target.IsCc())
             {
-                var pred = spell.GetPrediction(target);
-                if (pred.HitChance >= hitChance || target.IsCc())
-                {
-                    spell.Cast(pred.CastPosition);
-                }
+                spell.Cast(pred.CastPosition);
             }
         }
 
@@ -90,7 +90,8 @@ namespace LazyYorick
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if Obj_AI_Base is UnderEnemyTurret.
+        ///     Returns <see langword="true" /> if <see cref="Obj_AI_Base" /> is
+        ///     UnderEnemyTurret.
         /// </summary>
         public static bool UnderEnemyTurret(this Obj_AI_Base target)
         {
@@ -98,11 +99,12 @@ namespace LazyYorick
                 EntityManager.Turrets.AllTurrets.Any(
                     t =>
                         !t.IsDead && t.Team != target.Team && t.IsValidTarget() &&
-                        t.IsInRange(target, t.GetAutoAttackRange(target) + (target.BoundingRadius * 2)));
+                        t.IsInRange(target, t.GetAutoAttackRange(target) + (target.BoundingRadius*2)));
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if Vector3 is UnderEnemyTurret.
+        ///     Returns <see langword="true" /> if <see cref="Vector3" /> is
+        ///     UnderEnemyTurret.
         /// </summary>
         public static bool UnderEnemyTurret(this Vector3 pos)
         {
@@ -110,21 +112,23 @@ namespace LazyYorick
                 EntityManager.Turrets.Enemies.Any(
                     t =>
                         !t.IsDead && t.IsValidTarget() &&
-                        t.IsInRange(pos, t.GetAutoAttackRange(Player.Instance) + (Player.Instance.BoundingRadius * 2)));
+                        t.IsInRange(pos, t.GetAutoAttackRange(Player.Instance) + (Player.Instance.BoundingRadius*2)));
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if Vector2 is UnderEnemyTurret.
+        ///     Returns <see langword="true" /> if <see cref="Vector2" /> is
+        ///     UnderEnemyTurret.
         /// </summary>
         public static bool UnderEnemyTurret(this Vector2 pos)
         {
             return
                 EntityManager.Turrets.Enemies.Any(
-                    t => !t.IsDead && t.IsValidTarget() && t.IsInRange(pos, 1400 + (Player.Instance.BoundingRadius * 2)));
+                    t => !t.IsDead && t.IsValidTarget() && t.IsInRange(pos, 1400 + (Player.Instance.BoundingRadius*2)));
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if Obj_AI_Base is UnderAlliedTurret.
+        ///     Returns <see langword="true" /> if <see cref="Obj_AI_Base" /> is
+        ///     UnderAlliedTurret.
         /// </summary>
         public static bool UnderAlliedTurret(this Obj_AI_Base target)
         {
@@ -132,43 +136,46 @@ namespace LazyYorick
                 EntityManager.Turrets.AllTurrets.Any(
                     t =>
                         !t.IsDead && t.Team == target.Team && t.IsValidTarget() &&
-                        t.IsInRange(target, t.GetAutoAttackRange(target) + (target.BoundingRadius * 2)));
+                        t.IsInRange(target, t.GetAutoAttackRange(target) + (target.BoundingRadius*2)));
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if Vector3 is UnderAlliedTurret.
+        ///     Returns <see langword="true" /> if <see cref="Vector3" /> is
+        ///     UnderAlliedTurret.
         /// </summary>
         public static bool UnderAlliedTurret(this Vector3 pos)
         {
             return
                 EntityManager.Turrets.Allies.Any(
-                    t => !t.IsDead && t.IsInRange(pos, 1400 + (Player.Instance.BoundingRadius * 2)));
+                    t => !t.IsDead && t.IsInRange(pos, 1400 + (Player.Instance.BoundingRadius*2)));
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if Vector2 is UnderAlliedTurret.
+        ///     Returns <see langword="true" /> if <see cref="Vector2" /> is
+        ///     UnderAlliedTurret.
         /// </summary>
         public static bool UnderAlliedTurret(this Vector2 pos)
         {
             return
                 EntityManager.Turrets.Allies.Any(
-                    t => !t.IsDead && t.IsInRange(pos, 1400 + (Player.Instance.BoundingRadius * 2)));
+                    t => !t.IsDead && t.IsInRange(pos, 1400 + (Player.Instance.BoundingRadius*2)));
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if the <paramref name="spell" /> will
-        ///     kill the target.
+        ///     Returns <see langword="true" /> if the <paramref name="spell" />
+        ///     will kill the target.
         /// </summary>
         public static bool WillKill(this Spell.SpellBase spell, Obj_AI_Base target, float multiplyDmgBy = 1,
             float extraDamage = 0, DamageType extraDamageType = DamageType.True)
         {
-            return Player.Instance.GetSpellDamage(target, spell.Slot) * multiplyDmgBy +
+            return Player.Instance.GetSpellDamage(target, spell.Slot)*multiplyDmgBy +
                    Player.Instance.CalculateDamageOnUnit(target, extraDamageType, extraDamage) >=
                    Prediction.Health.GetPrediction(target, spell.CastDelay + Game.Ping);
         }
 
         /// <summary>
-        ///     Returns <see langword="true" /> if <paramref name="target" /> Is CC'D.
+        ///     Returns <see langword="true" /> if <paramref name="target" /> Is
+        ///     CC'D.
         /// </summary>
         public static bool IsCc(this Obj_AI_Base target)
         {
@@ -178,6 +185,5 @@ namespace LazyYorick
                    target.HasBuffOfType(BuffType.Suppression) || target.HasBuffOfType(BuffType.Taunt)
                    || target.HasBuffOfType(BuffType.Sleep);
         }
-
     }
 }

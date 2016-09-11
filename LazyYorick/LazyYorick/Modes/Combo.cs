@@ -1,6 +1,6 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX;
+using Settings = LazyYorick.Config.Modes.Combo;
 
 // ReSharper disable IdentifierWordIsNotInDictionary
 
@@ -15,12 +15,26 @@ namespace LazyYorick.Modes
 
         public override void Execute()
         {
-            var enemyQ = TargetSelector.GetTarget(Q.Range, DamageType.Physical);
+            var enemyQ = TargetSelector.GetTarget(Player.Instance.GetAutoAttackRange(), DamageType.Physical);
             var enemyW = TargetSelector.GetTarget(W.Range, DamageType.Physical);
-            var enemyE = TargetSelector.GetTarget(E.Range + 100, DamageType.Physical);
+            var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Physical);
             var enemyR = TargetSelector.GetTarget(W.Range, DamageType.Physical);
+            var ghouls = Events.Ghouls.Count;
 
-            if (SpellManager.W.IsReady())
+            if (Q.IsReady() && Settings.useQ && Player.Instance.ManaPercent > Settings.useQmana &&
+                Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2")
+            {
+                if (enemyQ != null)
+                {
+                    if (Settings.useQmode == 0)
+                    {
+                        if (enemyQ.IsKillable(Player.Instance.GetAutoAttackRange()))
+                            Q.Cast();
+                    }
+                }
+            }
+
+            if (W.IsReady() && Settings.useW)
             {
                 if (enemyW != null)
                 {
@@ -28,39 +42,47 @@ namespace LazyYorick.Modes
                         SpellManager.W.Radius, SpellManager.W.CastDelay, SpellManager.W.Speed,
                         Player.Instance.ServerPosition, true);
 
-                    if ( //Settings.UseWenemy && Program.Player.ManaPercent >= Settings.UseWselfMana &&
-                        enemyWpred.CastPosition.IsValid())
+                    if (Settings.useWenemy && Player.Instance.ManaPercent > Settings.useWenemyMana)
                     {
-                        W.Cast(enemyWpred.CastPosition);
+                        if (enemyWpred.CastPosition.IsValid())
+                            W.Cast(enemyWpred.CastPosition);
+                    }
+
+                    if (Settings.useWself && Player.Instance.ManaPercent > Settings.useWselfMana &&
+                        Player.Instance.HealthPercent < Settings.useWselfHp &&
+                        Player.Instance.CountEnemiesInRange(900) >= Settings.useWselfEnemiesAround)
+                    {
+                        W.Cast(Player.Instance.ServerPosition);
                     }
                 }
             }
 
-            if (SpellManager.E.IsReady())
+            if (E.IsReady() && Settings.useE && Player.Instance.ManaPercent > Settings.useEmana)
             {
                 if (enemyE != null)
                 {
-                    var enemyEpred = Prediction.Position.PredictCircularMissile(enemyE, E.Range, E.Radius, E.CastDelay, E.Speed,
-                        (Vector3?) enemyE.ServerPosition.Extend(Player.Instance, 200));
+                    var enemyEpred = Prediction.Position.PredictCircularMissile(enemyE, E.Range, E.Radius, E.CastDelay,
+                        E.Speed);
 
-                    if ( //Settings.UseEenemy && Program.Player.ManaPercent >= Settings.UseEmana &&
-                        (enemyEpred.CastPosition.IsValid() && enemyE.IsKillable(E.Range + 120)))
+                    switch (Settings.useEmode)
                     {
-                        if (R.IsReady() && (enemyR != null && enemyR.IsKillable(R.Range))) return;
-                        E.Cast(enemyEpred.CastPosition);
+                        case 0:
+                            E.Cast(enemyEpred.CastPosition);
+                            break;
+                        case 1:
+                            if (ghouls == 0) return;
+                            E.Cast(enemyEpred.CastPosition);
+                            break;
                     }
                 }
             }
 
-            if (SpellManager.R.IsReady())
-                if (enemyR != null)
-                {
-                    if ( //Settings.UseR &&
-                        enemyR.IsKillable())
-                    {
-                        SpellManager.R.Cast(enemyR);
-                    }
-                }
+            if (!R.IsReady()) return;
+            if (enemyR == null) return;
+            if (!Settings.useR || !(Player.Instance.ManaPercent > Settings.useRmana)) return;
+
+            if (enemyR.IsKillable(SpellManager.R.Range))
+                SpellManager.R.Cast(enemyR);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
+using Settings = LazyYorick.Config.Modes.LastHit;
 
 namespace LazyYorick.Modes
 {
@@ -13,17 +14,15 @@ namespace LazyYorick.Modes
 
         public override void Execute()
         {
-            //if (!Settings.UseQcs || !(Program.Player.ManaPercent > Settings.UseQcsMana)) return;
+            if (!Q.IsReady() || !Settings.useQ || !(Settings.useQmana < Player.Instance.ManaPercent)) return;
 
-            foreach (var minion in EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
-                Player.Instance.ServerPosition, Q.Range)
+            foreach (var minion in EntityManager.MinionsAndMonsters.EnemyMinions
                 .Where(minion => minion.IsKillable(Player.Instance.GetAutoAttackRange(minion)))
                 .Where(
-                    minion =>
-                        Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2" &&
-                        minion.IsValid && minion.Health < Player.Instance.GetSpellDamage(minion, SpellSlot.Q)))
+                    minion => minion.IsValid && minion.Health < Player.Instance.GetSpellDamage(minion, SpellSlot.Q)))
             {
-                SpellManager.Q.Cast();
+                if (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2")
+                    SpellManager.Q.Cast();
                 Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
             }
         }

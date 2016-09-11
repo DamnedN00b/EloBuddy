@@ -1,58 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Constants;
-using LazyYorick.KappaEvade;
+using EloBuddy.SDK.Rendering;
+using SharpDX;
+using DrawSettings = LazyYorick.Config.Modes.Drawings;
+using SkinSettings = LazyYorick.Config.Modes.Skins;
+using ComboSettings = LazyYorick.Config.Modes.Combo;
+using HarassSettings = LazyYorick.Config.Modes.Harass;
+using JungleClearSettings = LazyYorick.Config.Modes.JungleClear;
+using LaneClearSettings = LazyYorick.Config.Modes.LaneClear;
 
-// ReSharper disable IdentifierWordIsNotInDictionary
+// ReSharper disable StringLiteralsWordIsNotInDictionary
 
 namespace LazyYorick
 {
     internal static class Events
     {
-        /// <summary>
-        ///     Handler for the InComingDamage event
-        /// </summary>
-        /// <param name="args">The arguments the event provides</param>
-        public delegate void OnInComingDamage(InComingDamageEventArgs args);
-
         public static List<Obj_AI_Base> Graves = new List<Obj_AI_Base>();
+        public static List<Obj_AI_Base> Ghouls = new List<Obj_AI_Base>();
 
         static Events()
         {
-
-            Obj_AI_Base.OnProcessSpellCast += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+            Game.OnTick += delegate
             {
-                if (sender.IsMe && args.Slot == SpellSlot.Q)
-                Orbwalker.ResetAutoAttack();
+                if (SkinSettings.useSkin)
+                {
+                    Player.SetSkinId(SkinSettings.skinID);
+                }
             };
 
-        Orbwalker.OnPostAttack += delegate (AttackableUnit target, EventArgs args)
+            Obj_AI_Base.OnSpellCast += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
             {
-                if (!SpellManager.Q.IsReady()) return;
-                if (target?.Type == GameObjectType.AIHeroClient && (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2") && Events.Graves.Count < 4)
+                if (sender.IsMe && args.Slot == SpellSlot.Q &&
+                    Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2")
                 {
-                    SpellManager.Q.Cast();
-                    return;
+                    Orbwalker.ResetAutoAttack();
                 }
+            };
 
+            Orbwalker.OnPostAttack += delegate(AttackableUnit target, EventArgs args)
+            {
+                Orbwalker.MoveTo(Game.CursorPos);
+
+                if (Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name == "YorickQ2") return;
+
+                if (SpellManager.Q.IsReady())
+                {
+                    if (ComboSettings.useQmode == 1 && target?.Type == GameObjectType.AIHeroClient)
+                    {
+                        SpellManager.Q.Cast();
+                        return;
+                    }
+
+                    if (HarassSettings.useQmode == 1 && target?.Type == GameObjectType.AIHeroClient)
+                    {
+                        SpellManager.Q.Cast();
+                        return;
+                    }
+
+                    if (JungleClearSettings.useQmode == 1 && target?.Type == GameObjectType.NeutralMinionCamp)
+                    {
+                        SpellManager.Q.Cast();
+                        return;
+                    }
+
+                    if (LaneClearSettings.useQmode == 1 && target?.Type == GameObjectType.obj_AI_Minion)
+                    {
+                        SpellManager.Q.Cast();
+                        return;
+                    }
+                }
+                
                 Utility.CastItems();
             };
 
             GameObject.OnCreate += delegate(GameObject sender, EventArgs args)
             {
-                var marker = sender as Obj_AI_Base;
+                var obj = sender as Obj_AI_Base;
                 {
-                    if (marker == null || !marker.IsValid || !marker.Name.ToLower().Equals("yorickmarker"))
+                    if (obj == null || !obj.IsValid || !obj.IsAlly)
                         return;
 
-                    if (!marker.IsAlly ||
-                        !(marker.Distance(Player.Instance) < 600))
-                        return;
+                    if (obj.Name.ToLower().Equals("yorickmarker"))
+                    {
+                        Core.DelayAction(() => Graves.Add((Obj_AI_Minion) obj), 200);
+                    }
 
-                    Graves.Add((Obj_AI_Minion) marker);
+                    if (obj.Name.ToLower().Equals("yorickghoulmelee") || obj.Name.ToLower().Equals("yorickbigghoul"))
+                    {
+                        Core.DelayAction(() => Ghouls.Add((Obj_AI_Minion) obj), 200);
+                        Graves.RemoveAll(x => x.IsValid);
+                    }
                 }
             };
 
@@ -60,102 +99,63 @@ namespace LazyYorick
                 delegate(GameObject sender, EventArgs args)
                 {
                     Graves.RemoveAll(t => t.NetworkId.Equals(sender.NetworkId));
+                    Ghouls.RemoveAll(t => t.NetworkId.Equals(sender.NetworkId));
                 };
 
-            Game.OnUpdate += delegate
+            Drawing.OnDraw += delegate
             {
-                // Used to Invoke the Incoming Damage Event When there is SkillShot Incoming
-                foreach (var spell in Collision.NewSpells)
+                if (DrawSettings.disable) return;
+
+                switch (DrawSettings.drawMode)
                 {
-                    foreach (
-                        var ally in
-                            EntityManager.Heroes.Allies.Where(a => !a.IsDead && a.IsValidTarget() && a.IsInDanger(spell))
-                        )
-                    {
-                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(spell.Caster, ally,
-                            spell.Caster.GetSpellDamage(ally, spell.Spell.Slot), InComingDamageEventArgs.Type.SkillShot));
-                    }
-                }
-            };
+                    case 1:
+                        if (DrawSettings.drawQ)
+                            Circle.Draw(SpellManager.Q.IsReady() ? Color.Green : Color.Red, SpellManager.Q.Range,
+                                Player.Instance.Position);
 
-            SpellsDetector.OnTargetedSpellDetected +=
-                delegate(AIHeroClient sender, AIHeroClient target, GameObjectProcessSpellCastEventArgs args,
-                    Database.TargetedSpells.Spell spell)
-                {
-                    // Used to Invoke the Incoming Damage Event When there is a TargetedSpell Incoming
-                    if (target.IsAlly)
-                        OnIncomingDamage?.Invoke(new InComingDamageEventArgs(sender, target,
-                            sender.GetSpellDamage(target, spell.Slot), InComingDamageEventArgs.Type.TargetedSpell));
-                };
+                        if (DrawSettings.drawW)
+                            Circle.Draw(SpellManager.W.IsReady() ? Color.Green : Color.Red, SpellManager.W.Range,
+                                Player.Instance.Position);
 
-            Obj_AI_Base.OnBasicAttack += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
-            {
-                // Used to Invoke the Incoming Damage Event When there is an AutoAttack Incoming
-                var target = args.Target as AIHeroClient;
-                var hero = sender as AIHeroClient;
-                var turret = sender as Obj_AI_Turret;
-                var minion = sender as Obj_AI_Minion;
+                        if (DrawSettings.drawE)
+                            Circle.Draw(SpellManager.E.IsReady() ? Color.Green : Color.Red, SpellManager.E.Range,
+                                Player.Instance.Position);
 
-                if (target == null || !target.IsAlly) return;
+                        if (DrawSettings.drawR)
+                            Circle.Draw(SpellManager.R.IsReady() ? Color.Green : Color.Red, SpellManager.R.Range,
+                                Player.Instance.Position);
+                        break;
+                    case 0:
+                        if (DrawSettings.drawQ)
+                            if (SpellManager.Q.IsReady())
+                            {
+                                Circle.Draw(Color.DarkBlue, SpellManager.Q.Range, Player.Instance.Position);
+                            }
 
-                if (hero != null)
-                    OnIncomingDamage?.Invoke(new InComingDamageEventArgs(hero, target, hero.GetAutoAttackDamage(target),
-                        InComingDamageEventArgs.Type.HeroAttack));
-                if (turret != null)
-                    OnIncomingDamage?.Invoke(new InComingDamageEventArgs(turret, target,
-                        turret.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.TurretAttack));
-                if (minion != null)
-                    OnIncomingDamage?.Invoke(new InComingDamageEventArgs(minion, target,
-                        minion.GetAutoAttackDamage(target), InComingDamageEventArgs.Type.MinionAttack));
-            };
-            Obj_AI_Base.OnProcessSpellCast += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
-            {
-                var caster = sender as AIHeroClient;
-                var target = args.Target as AIHeroClient;
-                if (caster == null || target == null || !caster.IsEnemy || !target.IsAlly || args.IsAutoAttack())
-                    return;
-                if (!Database.TargetedSpells.TargetedSpellsList.Any(s => s.Hero == caster.Hero && s.Slot == args.Slot))
-                {
-                    OnIncomingDamage?.Invoke(new InComingDamageEventArgs(caster, target,
-                        caster.GetSpellDamage(target, args.Slot), InComingDamageEventArgs.Type.TargetedSpell));
+                        if (DrawSettings.drawW)
+                            if (SpellManager.W.IsReady())
+                            {
+                                Circle.Draw(Color.DarkBlue, SpellManager.W.Range, Player.Instance.Position);
+                            }
+
+                        if (DrawSettings.drawE)
+                            if (SpellManager.E.IsReady())
+                            {
+                                Circle.Draw(Color.DarkBlue, SpellManager.E.Range, Player.Instance.Position);
+                            }
+
+                        if (DrawSettings.drawR)
+                            if (SpellManager.R.IsReady())
+                            {
+                                Circle.Draw(Color.DarkBlue, SpellManager.R.Range, Player.Instance.Position);
+                            }
+                        break;
                 }
             };
         }
 
-        /// <summary>
-        ///     Fires when There is In Coming Damage to an ally
-        /// </summary>
-        public static
-            event OnInComingDamage OnIncomingDamage;
-
-        public static
-            void Initialize()
+        public static void Initialize()
         {
-        }
-
-        public class InComingDamageEventArgs
-        {
-            public enum Type
-            {
-                TurretAttack,
-                HeroAttack,
-                MinionAttack,
-                SkillShot,
-                TargetedSpell
-            }
-
-            public Type DamageType;
-            public float InComingDamage;
-            public Obj_AI_Base Sender;
-            public AIHeroClient Target;
-
-            public InComingDamageEventArgs(Obj_AI_Base sender, AIHeroClient target, float damage, Type type)
-            {
-                Sender = sender;
-                Target = target;
-                InComingDamage = damage;
-                DamageType = type;
-            }
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using EloBuddy;
+﻿using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Events;
-using SharpDX;
+using Settings = LazyYorick.Config.Modes.Flee;
 
 namespace LazyYorick.Modes
 {
@@ -15,10 +13,10 @@ namespace LazyYorick.Modes
 
         public override void Execute()
         {
-            if (W.IsReady() &&
-                (//Settings.UseWflee && Program.Player.ManaPercent >= Settings.UseWfleeMana &&
-                    //Player.Instance.HealthPercent <= Settings.UseWselfHP && 
-                    Player.Instance.CountEnemiesInRange(SpellManager.W.Width) > 1))
+            if (!W.IsReady()) return;
+
+            if (Settings.useW &&
+                Player.Instance.CountEnemiesInRange(900) >= 1)
             {
                 W.Cast(Player.Instance.ServerPosition);
             }

@@ -11,7 +11,6 @@ namespace LazyYorick
     {
         static ModeManager()
         {
-            // Initialize properties
             Modes = new List<ModeBase>();
 
             Modes.AddRange(new ModeBase[]
@@ -25,17 +24,22 @@ namespace LazyYorick
                 new Flee()
             });
 
-            // Listen to events we need
             Game.OnUpdate += OnUpdate;
         }
 
+        /// <summary>
+        ///     Mode Initialization
+        /// </summary>
         private static List<ModeBase> Modes { get; }
 
         public static void Initialize()
         {
-            // Let the static initializer do the job, this way we avoid multiple init calls aswell
         }
 
+        /// <summary>
+        ///     execute <see cref="LazyYorick.ModeManager.Modes" />
+        /// </summary>
+        /// <param name="args"></param>
         private static void OnUpdate(EventArgs args)
         {
             // Execute all modes
@@ -44,7 +48,7 @@ namespace LazyYorick
             {
                 try
                 {
-                    // Precheck if the mode should be executed
+                    // Check if the mode should be executed
                     if (mode.ShouldBeExecuted())
                     {
                         // Execute the mode
