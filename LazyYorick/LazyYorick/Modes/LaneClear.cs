@@ -61,7 +61,7 @@ namespace LazyYorick.Modes
                 }
                 case 1:
                 {
-                    if (Events.Ghouls.Count == 0) return;
+                    if (Events.GhoulsInRange == 0) return;
 
                     var minions = EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range));
                     var circFarmLoc =

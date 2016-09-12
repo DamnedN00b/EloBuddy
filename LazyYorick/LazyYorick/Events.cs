@@ -21,6 +21,7 @@ namespace LazyYorick
         public static List<Obj_AI_Base> Ghouls = new List<Obj_AI_Base>();
 
         public static int GravesInRange;
+        public static int GhoulsInRange;
 
 
         static Events()
@@ -34,6 +35,8 @@ namespace LazyYorick
 
                 GravesInRange =
                     Graves.FindAll(x => x.IsValid && x.Distance(Player.Instance.ServerPosition) <= 900).Count;
+                GhoulsInRange =
+                    Ghouls.FindAll(x => x.IsValid && x.Distance(Player.Instance.ServerPosition) <= 700).Count;
             };
 
             Obj_AI_Base.OnSpellCast += delegate(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)

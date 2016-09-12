@@ -21,7 +21,6 @@ namespace LazyYorick.Modes
             var enemyW = TargetSelector.GetTarget(W.Range, DamageType.Physical);
             var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Physical);
             var enemyR = TargetSelector.GetTarget(W.Range, DamageType.Physical);
-            var ghouls = Events.Ghouls.Count;
 
             if (Q.IsReady() && Settings.useQ && Player.Instance.ManaPercent > Settings.useQmana &&
                 Player.Instance.Spellbook.GetSpell(SpellSlot.Q).Name != "YorickQ2")
@@ -77,7 +76,7 @@ namespace LazyYorick.Modes
                     }
                     else if (Settings.useEmode == 1)
                     {
-                        if (ghouls == 0) return;
+                        if (Events.GhoulsInRange == 0) return;
                         if (ePredPoly.IsInside(enemyPred) &&
                             (ePredPoly.CenterOfPolygon().Distance(Player.Instance) - 180) <= 700)
                             E.Cast(enemyPred.To3D());

@@ -57,7 +57,7 @@ namespace LazyYorick.Modes
             }
             else if (Settings.useEmode == 1)
             {
-                if (Events.Ghouls.Count == 0) return;
+                if (Events.GhoulsInRange == 0) return;
 
                 foreach (
                     var minion in
