@@ -17,7 +17,7 @@ namespace LazyYorick.Modes
         {
             if (Q.IsReady())
             {
-                if (Events.GravesInRange == Settings.useQghoulsValue && Settings.useQghouls)
+                if (Events.GravesInRange >= Settings.useQghoulsValue && Settings.useQghouls)
                 {
                     Core.DelayAction(() => Q.Cast(), 200);
                 }
