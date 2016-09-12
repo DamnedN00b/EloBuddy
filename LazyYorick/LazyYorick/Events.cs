@@ -20,6 +20,9 @@ namespace LazyYorick
         public static List<Obj_AI_Base> Graves = new List<Obj_AI_Base>();
         public static List<Obj_AI_Base> Ghouls = new List<Obj_AI_Base>();
 
+        public static int GravesInRange =
+            Graves.FindAll(x => x.IsValid && x.Distance(Player.Instance.ServerPosition) <= 900).Count;
+
         static Events()
         {
             Game.OnTick += delegate
@@ -45,25 +48,29 @@ namespace LazyYorick
 
                 if (SpellManager.Q.IsReady())
                 {
-                    if (ComboSettings.useQmode == 1 && target?.Type == GameObjectType.AIHeroClient)
+                    if (ComboSettings.useQmode == 1 && target?.Type == GameObjectType.AIHeroClient &&
+                        Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
                     {
                         SpellManager.Q.Cast();
                         return;
                     }
 
-                    if (HarassSettings.useQmode == 1 && target?.Type == GameObjectType.AIHeroClient)
+                    if (HarassSettings.useQmode == 1 && target?.Type == GameObjectType.AIHeroClient &&
+                        Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass))
                     {
                         SpellManager.Q.Cast();
                         return;
                     }
 
-                    if (JungleClearSettings.useQmode == 1 && target?.Type == GameObjectType.NeutralMinionCamp)
+                    if (JungleClearSettings.useQmode == 1 && target?.Type == GameObjectType.NeutralMinionCamp &&
+                        Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                     {
                         SpellManager.Q.Cast();
                         return;
                     }
 
-                    if (LaneClearSettings.useQmode == 1 && target?.Type == GameObjectType.obj_AI_Minion)
+                    if (LaneClearSettings.useQmode == 1 && target?.Type == GameObjectType.obj_AI_Minion &&
+                        Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
                     {
                         SpellManager.Q.Cast();
                         return;
