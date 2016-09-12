@@ -185,5 +185,28 @@ namespace LazyYorick
                    target.HasBuffOfType(BuffType.Suppression) || target.HasBuffOfType(BuffType.Taunt)
                    || target.HasBuffOfType(BuffType.Sleep);
         }
+
+        public static Geometry.Polygon GetPoly(this Vector3 castPos)
+        {
+            const int eRadius = 100;
+            var startPos = Player.Instance.ServerPosition.Extend(castPos, Player.Instance.Distance(castPos) - 100);
+            var endPos = Player.Instance.ServerPosition.Extend(castPos, Player.Instance.Distance(castPos) + 400);
+            var direction = (endPos - startPos).Normalized();
+
+            var pos1 = (startPos - direction.Perpendicular() * (eRadius -20)).To3D();
+
+            var pos3 = (startPos + direction.Perpendicular() * (eRadius -20)).To3D();
+
+            var pos2 = (endPos + (endPos - startPos).Normalized() + direction.Perpendicular() * (eRadius + 50)).To3D();
+
+            var pos4 = (endPos + (endPos - startPos).Normalized() - direction.Perpendicular() * (eRadius + 50)).To3D();
+
+            var poly = new Geometry.Polygon();
+            poly.Add(pos1);
+            poly.Add(pos3);
+            poly.Add(pos2);
+            poly.Add(pos4);
+            return poly;
+        }
     }
 }

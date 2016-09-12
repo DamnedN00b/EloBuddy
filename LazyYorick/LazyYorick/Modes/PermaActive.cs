@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX;
 using Settings = LazyYorick.Config.Modes.PermaActive;
 
 namespace LazyYorick.Modes
@@ -19,7 +18,7 @@ namespace LazyYorick.Modes
             {
                 if (Events.GravesInRange >= Settings.useQghoulsValue && Settings.useQghouls)
                 {
-                    Core.DelayAction(() => Q.Cast(), 200);
+                    Core.DelayAction(() => Q.Cast(), 500);
                 }
 
                 if (Settings.useQks)
@@ -38,17 +37,19 @@ namespace LazyYorick.Modes
             if (!E.IsReady() || !Settings.useEks) return;
 
             foreach (
-                var enemyEpred2 in
-                    from enemy in
-                        EntityManager.Heroes.Enemies.Where(
-                            x => x.IsKillable(Player.Instance.GetAutoAttackRange()))
-                    let enemyEpred = Prediction.Position.PredictCircularMissile(enemy, E.Range, E.Radius,
-                        E.CastDelay, E.Speed, Player.Instance.ServerPosition, true)
-                    let enemyEpred2 = enemyEpred.CastPosition.Extend(Player.Instance.ServerPosition, 100)
-                    where E.WillKill(enemy) && enemyEpred2.IsValid()
-                    select enemyEpred2)
+                var enemyPred in
+                    from enemy in EntityManager.Heroes.Enemies.Where(x => x.IsKillable(E.Range) && E.WillKill(x))
+                    select Prediction.Position.PredictUnitPosition(enemy, E.CastDelay)
+                    into enemyPred
+                    let ePredPoly =
+                        Player.Instance.ServerPosition.Extend(enemyPred, Player.Instance.Distance(enemyPred.To3D()))
+                            .To3D()
+                            .GetPoly()
+                    where ePredPoly.IsInside(enemyPred) &&
+                          (ePredPoly.CenterOfPolygon().Distance(Player.Instance) - 180) <= 700
+                    select enemyPred)
             {
-                E.Cast((Vector3) enemyEpred2);
+                E.Cast(enemyPred.To3D());
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX;
 using Settings = LazyYorick.Config.Modes.LaneClear;
 
 namespace LazyYorick.Modes
@@ -48,13 +47,15 @@ namespace LazyYorick.Modes
             {
                 case 0:
                 {
-                    var farmLoc =
+                    var minions = EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range));
+                    var circFarmLoc =
                         EntityManager.MinionsAndMonsters.GetCircularFarmLocation(
-                            EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range)), E.Radius,
+                            EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range)), E.Width,
                             (int) E.Range);
+                    var poly = circFarmLoc.CastPosition.GetPoly();
+                    if (minions.Count(m => poly.IsInside(m.Position)) >= 3)
                     {
-                        if (farmLoc.HitNumber >= 3)
-                            SpellManager.E.Cast(farmLoc.CastPosition);
+                        E.Cast(circFarmLoc.CastPosition);
                     }
                     break;
                 }
@@ -62,16 +63,18 @@ namespace LazyYorick.Modes
                 {
                     if (Events.Ghouls.Count == 0) return;
 
-                    var farmLoc =
+                    var minions = EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range));
+                    var circFarmLoc =
                         EntityManager.MinionsAndMonsters.GetCircularFarmLocation(
-                            EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range)), E.Radius,
+                            EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(E.Range)), E.Width,
                             (int) E.Range);
+                    var poly = circFarmLoc.CastPosition.GetPoly();
+                    if (minions.Count(m => poly.IsInside(m.Position)) >= 3)
                     {
-                        if (farmLoc.HitNumber >= 3)
-                            SpellManager.E.Cast(farmLoc.CastPosition);
+                        E.Cast(circFarmLoc.CastPosition);
                     }
-                }
                     break;
+                }
             }
         }
     }

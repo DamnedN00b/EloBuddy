@@ -13,7 +13,7 @@ namespace LazyYorick
             {
                 W.AllowedCollisionCount = int.MaxValue;
             }
-            E = new Spell.Skillshot(SpellSlot.E, 700, SkillShotType.Circular, 500, 1200, 200);
+            E = new Spell.Skillshot(SpellSlot.E, 1000, SkillShotType.Circular, 500, 1200, 200);
             {
                 E.AllowedCollisionCount = int.MaxValue;
             }

@@ -1,5 +1,7 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
+using SharpDX;
+using Color = System.Drawing.Color;
 using Settings = LazyYorick.Config.Modes.Combo;
 
 // ReSharper disable IdentifierWordIsNotInDictionary
@@ -61,18 +63,24 @@ namespace LazyYorick.Modes
             {
                 if (enemyE != null)
                 {
-                    var enemyEpred = Prediction.Position.PredictCircularMissile(enemyE, E.Range, E.Radius, E.CastDelay,
-                        E.Speed);
+                    var enemyPred = Prediction.Position.PredictUnitPosition(enemyE, E.CastDelay);
+                    var ePredPoly =
+                        Player.Instance.ServerPosition.Extend(enemyPred, Player.Instance.Distance(enemyPred.To3D()))
+                            .To3D()
+                            .GetPoly();
 
-                    switch (Settings.useEmode)
+                    if (Settings.useEmode == 0)
                     {
-                        case 0:
-                            E.Cast(enemyEpred.CastPosition);
-                            break;
-                        case 1:
-                            if (ghouls == 0) return;
-                            E.Cast(enemyEpred.CastPosition);
-                            break;
+                        if (ePredPoly.IsInside(enemyPred) &&
+                            (ePredPoly.CenterOfPolygon().Distance(Player.Instance) - 180) <= 700)
+                            E.Cast(enemyPred.To3D());
+                    }
+                    else if (Settings.useEmode == 1)
+                    {
+                        if (ghouls == 0) return;
+                        if (ePredPoly.IsInside(enemyPred) &&
+                            (ePredPoly.CenterOfPolygon().Distance(Player.Instance) - 180) <= 700)
+                            E.Cast(enemyPred.To3D());
                     }
                 }
             }
