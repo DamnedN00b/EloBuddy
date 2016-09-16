@@ -25,11 +25,10 @@ namespace LazyYorick.Modes
                 {
                     foreach (
                         var enemy in
-                            EntityManager.Heroes.Enemies.Where(x => x.IsKillable(Player.Instance.GetAutoAttackRange())))
+                            EntityManager.Heroes.Enemies.Where(x => x.IsKillable(Player.Instance.GetAutoAttackRange()))
+                                .Where(enemy => Q.WillKill(enemy)))
                     {
-                        if (Q.WillKill(enemy))
-                            Q.Cast();
-                        Player.IssueOrder(GameObjectOrder.AttackUnit, enemy);
+                        Q.Cast();
                     }
                 }
             }

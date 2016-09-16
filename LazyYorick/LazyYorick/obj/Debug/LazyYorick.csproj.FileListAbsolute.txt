@@ -18,3 +18,4 @@ C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\bin\Debug\SharpDX.dll
 C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\obj\Debug\LazyYorick.exe
 C:\Users\Kappa\Documents\GitHub\Test\LazyYorick\LazyYorick\obj\Debug\LazyYorick.pdb
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyYorick\LazyYorick\obj\Debug\LazyYorick.csprojResolveAssemblyReference.cache
