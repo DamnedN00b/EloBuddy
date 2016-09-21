@@ -20,7 +20,7 @@ namespace LazyYorick.Modes
             {
                 if (Settings.useQmode == 0)
                 {
-                    foreach (var minion in EntityManager.MinionsAndMonsters.EnemyMinions
+                    foreach (var minion in EntityManager.MinionsAndMonsters.Monsters
                         .Where(minion => minion.IsKillable(Player.Instance.GetAutoAttackRange(minion)))
                         .Where(minion => minion.IsValid))
                     {
