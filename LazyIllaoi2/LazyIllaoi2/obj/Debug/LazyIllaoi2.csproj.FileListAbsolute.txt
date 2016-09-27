@@ -1,0 +1,11 @@
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\LazyIllaoi2.exe.config
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\LazyIllaoi2.exe
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\LazyIllaoi2.pdb
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\EloBuddy.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\EloBuddy.SDK.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\SharpDX.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\obj\Debug\LazyIllaoi2.csprojResolveAssemblyReference.cache
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\obj\Debug\LazyIllaoi2.exe
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\obj\Debug\LazyIllaoi2.pdb
