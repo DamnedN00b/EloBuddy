@@ -18,14 +18,16 @@ namespace LazyIllaoi2.Modes
 
             if (Events.Ghost != null && enemyQ == null)
             {
-                enemyQ = Events.Ghost;
+                if (Events.Ghost.Distance(Player.Instance.ServerPosition) < Q.Range)
+                    enemyQ = Events.Ghost;
             }
 
             Obj_AI_Base enemyW = TargetSelector.GetTarget(W.Range, DamageType.Physical);
 
             if (Events.Ghost != null && enemyW == null)
             {
-                enemyW = Events.Ghost;
+                if (Events.Ghost.Distance(Player.Instance.ServerPosition) < W.Range)
+                    enemyW = Events.Ghost;
             }
 
             var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Physical);
@@ -36,7 +38,7 @@ namespace LazyIllaoi2.Modes
                 {
                     if (enemyQ.IsKillable())
                     {
-                        var predPos = Q.GetPrediction(enemyQ);
+                        var predPos = SpellManager.Q.GetPrediction(enemyQ);
 
                         if (Settings.useQmode == 1)
                         {
@@ -44,7 +46,7 @@ namespace LazyIllaoi2.Modes
                             {
                                 var qPoly = new Geometry.Polygon.Rectangle((Vector2)Player.Instance.ServerPosition,
                                     Player.Instance.ServerPosition.Extend(Events.Ghost.ServerPosition,
-                                        SpellManager.Q.Range), Q.Width);
+                                        SpellManager.Q.Range), SpellManager.Q.Width);
 
                                 if (qPoly.IsInside(predPos.CastPosition))
                                 {

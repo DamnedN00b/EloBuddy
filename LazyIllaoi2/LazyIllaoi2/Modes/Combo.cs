@@ -18,6 +18,7 @@ namespace LazyIllaoi2.Modes
 
             if (Events.Ghost != null && enemyQ == null)
             {
+                if (Events.Ghost.Distance(Player.Instance.ServerPosition) < Q.Range)
                 enemyQ = Events.Ghost;
             }
 
@@ -25,7 +26,8 @@ namespace LazyIllaoi2.Modes
 
             if (Events.Ghost != null && enemyW == null)
             {
-                enemyW = Events.Ghost;
+                if (Events.Ghost.Distance(Player.Instance.ServerPosition) < W.Range)
+                    enemyW = Events.Ghost;
             }
 
             var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Physical);
@@ -92,7 +94,7 @@ namespace LazyIllaoi2.Modes
 
                     if (enemyE.IsKillable())
                     {
-                        E.Cast(predPos.CastPosition);
+                        SpellManager.E.Cast(predPos.CastPosition);
                     }
                 }
             }
@@ -102,10 +104,7 @@ namespace LazyIllaoi2.Modes
             {
                 if (Events.Ghost != null && Settings.useRmode == 1)
                 {
-                    Chat.Print("case 2");
-
                     if (Player.Instance.ServerPosition.Distance(Events.Ghost.ServerPosition) <= R.Range)
-                        Chat.Print("case 3");
                     R.Cast();
                 }
 
