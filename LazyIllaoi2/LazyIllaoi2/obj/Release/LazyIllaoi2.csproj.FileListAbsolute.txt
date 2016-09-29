@@ -1,0 +1,10 @@
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\LazyIllaoi2.exe.config
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\LazyIllaoi2.exe
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\LazyIllaoi2.pdb
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\EloBuddy.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\EloBuddy.SDK.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\SharpDX.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\bin\Release\Newtonsoft.Json.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\obj\Release\LazyIllaoi2.exe
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIllaoi2\LazyIllaoi2\obj\Release\LazyIllaoi2.pdb
