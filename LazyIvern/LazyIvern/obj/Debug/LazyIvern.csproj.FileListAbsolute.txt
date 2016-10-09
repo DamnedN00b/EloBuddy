@@ -1,0 +1,10 @@
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\LazyIvern.exe.config
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\LazyIvern.exe
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\LazyIvern.pdb
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\EloBuddy.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\EloBuddy.SDK.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\SharpDX.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\obj\Debug\LazyIvern.exe
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\obj\Debug\LazyIvern.pdb

@@ -81,3 +81,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+LazyIvern/LazyIvern/bin/Debug/LazyIvern.vshost.exe.manifest
+LazyIvern/LazyIvern/bin/Debug/LazyIvern.vshost.exe.config
+LazyIvern/LazyIvern/bin/Debug/LazyIvern.pdb
+LazyIvern/LazyIvern/bin/Debug/LazyIvern.exe.config
