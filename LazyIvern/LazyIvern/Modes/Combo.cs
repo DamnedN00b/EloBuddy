@@ -56,13 +56,8 @@ namespace LazyIvern.Modes
             {
                 if (enemyE == null) return;
                 {
-                    if (enemyE.IsKillable())
-                    {
-                        E.Cast(Player.Instance);
-                    }
-
                     foreach (
-                        var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable() && a.IsInRange(enemyE, 250)))
+                        var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable() && a.IsInRange(enemyE, 140)))
                     {
                         E.Cast(ally);
                     }
