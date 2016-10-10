@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
-using SharpDX;
 using Settings = LazyIvern.Config.Modes.Combo;
 
 namespace LazyIvern.Modes
@@ -57,7 +54,8 @@ namespace LazyIvern.Modes
                 if (enemyE == null) return;
                 {
                     foreach (
-                        var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable() && a.IsInRange(enemyE, 140)))
+                        var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(E.Range) &&
+                                                                           a.IsInRange(enemyE, 140)))
                     {
                         E.Cast(ally);
                     }
