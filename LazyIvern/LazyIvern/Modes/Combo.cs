@@ -17,7 +17,7 @@ namespace LazyIvern.Modes
         {
             var enemyQ = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
             var enemyW = TargetSelector.GetTarget(W.Range, DamageType.Magical);
-            var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Magical);
+            var enemyE = TargetSelector.GetTarget(E.Range + 200, DamageType.Magical);
 
             if (Q.IsReady() && Settings.useQ && Player.Instance.ManaPercent > Settings.useQmana)
             {
@@ -55,7 +55,7 @@ namespace LazyIvern.Modes
                 {
                     foreach (
                         var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(E.Range) &&
-                                                                           a.IsInRange(enemyE, 140)))
+                                                                           a.IsInRange(enemyE, 200)))
                     {
                         E.Cast(ally);
                     }
