@@ -4,6 +4,7 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Rendering;
+using LazyIvern.Modes;
 using SharpDX;
 using DrawSettings = LazyIvern.Config.Modes.Drawings;
 using SkinSettings = LazyIvern.Config.Modes.Skins;
@@ -37,9 +38,18 @@ namespace LazyIvern
                 }
             };
 
-            Orbwalker.OnPostAttack += delegate(AttackableUnit target, EventArgs args) { Utility.CastItems(); };
+            Obj_AI_Base.OnBuffLose += delegate(Obj_AI_Base sender, Obj_AI_BaseBuffLoseEventArgs args)
+            {
+                if (sender.IsEnemy && args.Buff.Name.Equals("IvernQ"))
+                {
+                    PermActive.Jumped = false;
+                }
+            };
 
-            //player.onbuffgain ivernqallyjump
+            Orbwalker.OnPostAttack += delegate(AttackableUnit target, EventArgs args)
+            {
+                Utility.CastItems();
+            };
 
             GameObject.OnCreate += delegate(GameObject sender, EventArgs args)
             {

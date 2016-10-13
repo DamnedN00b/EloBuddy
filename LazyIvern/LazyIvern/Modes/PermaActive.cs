@@ -12,14 +12,20 @@ namespace LazyIvern.Modes
             return !Player.Instance.IsRecalling();
         }
 
+        public static bool Jumped;
+
         public override void Execute()
         {
             var enemyR = TargetSelector.GetTarget(W.Range, DamageType.Magical);
             var enemyQ = EntityManager.Heroes.Enemies.FirstOrDefault(x => x.HasBuff("IvernQ") && x.IsKillable());
 
-            if (enemyQ != null && Settings.jumpTarget && 
+
+            if (enemyQ != null && Settings.jumpTarget && !Jumped &&
                 Settings.jumpEnemiesCount <= enemyQ.CountEnemiesInRange(900) && !enemyQ.IsUnderHisturret())
+            {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, enemyQ);
+                Jumped = true;
+            }
 
             if (!R.IsReady() || Events.Daisy == null || !Settings.movePet) return;
 
