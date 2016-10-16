@@ -234,26 +234,7 @@ namespace LazyIvern
             {
                 static JungleClear()
                 {
-                    /*ToDo: Add JungleClear
-                    JungleClearMenu.AddGroupLabel("JungleClear");
-
-                    _useQ = JungleClearMenu.Add("useQ", new CheckBox("Use Q"));
-                    JungleClearMenu.AddSeparator(20);
-
-                    _useQmana = JungleClearMenu.Add("useQmana", new Slider("If Mana % > {0}", 0, 0, 100));
-                    JungleClearMenu.AddSeparator(50);
-
-                    _useW = JungleClearMenu.Add("useW", new CheckBox("Use W"));
-                    JungleClearMenu.AddSeparator(20);
-
-                    _useWtentacles = JungleClearMenu.Add("useWtentacles", new CheckBox("Only with Tentacles in Range"));
-                    JungleClearMenu.AddSeparator(20);
-
-                    _useWmode = JungleClearMenu.Add("useWmode", new ComboBox("W Mode:", 0, "Always", "Afterattack"));
-                    JungleClearMenu.AddSeparator(20);
-
-                    _useWmana = JungleClearMenu.Add("useWmana", new Slider("If Mana % > {0}", 0, 0, 100));
-                    */
+                    //ToDo: Add JungleClear hu3
                 }
 
                 public static void Initialize()
@@ -299,6 +280,7 @@ namespace LazyIvern
                 private static readonly CheckBox _movePet;
                 private static readonly ComboBox _petTarget;
                 private static readonly CheckBox _jumpTarget;
+                private static readonly CheckBox _jumpOnlyCombo;
                 private static readonly Slider _jumpEnemiesCount;
 
                 static PermaActive()
@@ -310,6 +292,7 @@ namespace LazyIvern
                     PermaActiveMenu.AddSeparator(50);
 
                     _jumpTarget = PermaActiveMenu.Add("jumpTarget", new CheckBox("Jump to Q buffed Enemies"));
+                    _jumpOnlyCombo = PermaActiveMenu.Add("jumpOnlyCombo", new CheckBox("Jump only in Combo mode"));
                     _jumpEnemiesCount = PermaActiveMenu.Add("jumpEnemiesCount",
                         new Slider("if less or equal to {0} enemie(s) around", 1, 0, 5));
                 }
@@ -321,6 +304,7 @@ namespace LazyIvern
                 public static bool movePet => _movePet.CurrentValue;
                 public static int petTarget => _petTarget.CurrentValue;
                 public static bool jumpTarget => _jumpTarget.CurrentValue;
+                public static bool jumpOnlyCombo => _jumpOnlyCombo.CurrentValue;
                 public static int jumpEnemiesCount => _jumpEnemiesCount.CurrentValue;
             }
 

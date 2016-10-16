@@ -20,7 +20,7 @@ namespace LazyIvern.Modes
             var enemyQ = EntityManager.Heroes.Enemies.FirstOrDefault(x => x.HasBuff("IvernQ") && x.IsKillable());
 
 
-            if (enemyQ != null && Settings.jumpTarget && !Jumped &&
+            if (enemyQ != null && Settings.jumpTarget && !Jumped && !Settings.jumpOnlyCombo &&
                 Settings.jumpEnemiesCount <= enemyQ.CountEnemiesInRange(900) && !enemyQ.IsUnderHisturret())
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, enemyQ);

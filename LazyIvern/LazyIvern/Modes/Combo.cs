@@ -18,6 +18,15 @@ namespace LazyIvern.Modes
             var enemyQ = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
             var enemyW = TargetSelector.GetTarget(W.Range, DamageType.Magical);
             var enemyE = TargetSelector.GetTarget(E.Range + 200, DamageType.Magical);
+            var enemyJq = EntityManager.Heroes.Enemies.FirstOrDefault(x => x.HasBuff("IvernQ") && x.IsKillable());
+
+
+            if (enemyJq != null && Config.Modes.PermaActive.jumpTarget && !PermActive.Jumped && Config.Modes.PermaActive.jumpOnlyCombo &&
+                Config.Modes.PermaActive.jumpEnemiesCount <= enemyQ.CountEnemiesInRange(900) && !enemyQ.IsUnderHisturret())
+            {
+                Player.IssueOrder(GameObjectOrder.AttackUnit, enemyQ);
+                PermActive.Jumped = true;
+            }
 
             if (Q.IsReady() && Settings.useQ && Player.Instance.ManaPercent > Settings.useQmana)
             {
