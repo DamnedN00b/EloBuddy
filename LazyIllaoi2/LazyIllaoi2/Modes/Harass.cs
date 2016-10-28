@@ -93,7 +93,7 @@ namespace LazyIllaoi2.Modes
             {
                 var predPos = SpellManager.E.GetPrediction(enemyE);
 
-                if (enemyE.IsKillable())
+                if (enemyE.IsKillable() && !predPos.Collision)
                 {
                     SpellManager.E.Cast(predPos.CastPosition);
                 }
