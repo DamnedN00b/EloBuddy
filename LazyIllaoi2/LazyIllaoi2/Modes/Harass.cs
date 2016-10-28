@@ -1,5 +1,6 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using SharpDX;
 using Settings = LazyIllaoi2.Config.Modes.Harass;
 
@@ -93,7 +94,7 @@ namespace LazyIllaoi2.Modes
             {
                 var predPos = SpellManager.E.GetPrediction(enemyE);
 
-                if (enemyE.IsKillable() && !predPos.Collision)
+                if (enemyE.IsKillable() && predPos.HitChance > HitChance.Medium)
                 {
                     SpellManager.E.Cast(predPos.CastPosition);
                 }
