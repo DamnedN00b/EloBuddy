@@ -49,14 +49,14 @@ namespace LazyIllaoi2.Modes
                                     Player.Instance.ServerPosition.Extend(Events.Ghost.ServerPosition,
                                         SpellManager.Q.Range), SpellManager.Q.Width);
 
-                                if (qPoly.IsInside(predPos.CastPosition))
+                                if (qPoly.IsInside(predPos.CastPosition) && predPos.HitChance >= HitChance.Medium)
                                 {
                                     SpellManager.Q.Cast(predPos.CastPosition);
                                 }
                             }
                         }
 
-                        if (Settings.useQmode == 0 || (!E.IsReady() && Events.Ghost == null))
+                        if (Settings.useQmode == 0 || (!E.IsReady() && Events.Ghost == null) && predPos.HitChance >= HitChance.Medium)
                         {
                             SpellManager.Q.Cast(predPos.CastPosition);
                         }
