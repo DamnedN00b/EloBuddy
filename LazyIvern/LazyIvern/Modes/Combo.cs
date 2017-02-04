@@ -64,9 +64,14 @@ namespace LazyIvern.Modes
                 {
                     foreach (
                         var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(E.Range) &&
-                                                                           a.IsInRange(enemyE, 200)))
+                                                                           a.IsInRange(enemyE, 300)))
                     {
                         E.Cast(ally);
+                    }
+
+                    if (Events.Daisy != null && Events.Daisy.IsInRange(enemyE, 300))
+                    {
+                        E.Cast(Events.Daisy);
                     }
                 }
             }
