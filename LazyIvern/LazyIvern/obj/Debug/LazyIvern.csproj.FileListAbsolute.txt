@@ -8,3 +8,5 @@ C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\SharpDX.d
 C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\obj\Debug\LazyIvern.exe
 C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\obj\Debug\LazyIvern.pdb
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\bin\Debug\EloBuddy.Sandbox.dll
+C:\Users\Kappa\Documents\GitHub\EloBuddy\LazyIvern\LazyIvern\obj\Debug\LazyIvern.csprojResolveAssemblyReference.cache

@@ -21,7 +21,7 @@ namespace LazyIvern.Modes
 
 
             if (enemyQ != null && Settings.jumpTarget && !Jumped && !Settings.jumpOnlyCombo &&
-                Settings.jumpEnemiesCount <= enemyQ.CountEnemiesInRange(900) && !enemyQ.IsUnderHisturret())
+                Settings.jumpEnemiesCount <= enemyQ.CountEnemyChampionsInRange(900) && !enemyQ.IsUnderHisturret())
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, enemyQ);
                 Jumped = true;

@@ -22,7 +22,7 @@ namespace LazyIvern.Modes
 
 
             if (enemyJq != null && Config.Modes.PermaActive.jumpTarget && !PermActive.Jumped && Config.Modes.PermaActive.jumpOnlyCombo &&
-                Config.Modes.PermaActive.jumpEnemiesCount <= enemyQ.CountEnemiesInRange(900) && !enemyQ.IsUnderHisturret())
+                Config.Modes.PermaActive.jumpEnemiesCount <= enemyQ.CountEnemyChampionsInRange(900) && !enemyQ.IsUnderHisturret())
             {
                 Player.IssueOrder(GameObjectOrder.AttackUnit, enemyQ);
                 PermActive.Jumped = true;
