@@ -17,7 +17,7 @@ namespace LazyIvern.Modes
         {
             var enemyQ = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
             var enemyW = TargetSelector.GetTarget(W.Range, DamageType.Magical);
-            var enemyE = TargetSelector.GetTarget(E.Range + 200, DamageType.Magical);
+            var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Magical);
             var enemyJq = EntityManager.Heroes.Enemies.FirstOrDefault(x => x.HasBuff("IvernQ") && x.IsKillable());
 
 
@@ -69,7 +69,7 @@ namespace LazyIvern.Modes
                         E.Cast(ally);
                     }
 
-                    if (Events.Daisy != null && Events.Daisy.IsInRange(enemyE, 300))
+                    if (Events.Daisy != null && Events.Daisy.IsInRange(Player.Instance, E.Range) && Events.Daisy.IsInRange(enemyE, 300))
                     {
                         E.Cast(Events.Daisy);
                     }
