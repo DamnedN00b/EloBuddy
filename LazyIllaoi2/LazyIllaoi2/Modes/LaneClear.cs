@@ -16,14 +16,8 @@ namespace LazyIllaoi2.Modes
         {
             if (Q.IsReady() && Settings.useQ && Player.Instance.ManaPercent > Settings.useQmana)
             {
-                var linefarmloc =
-                    EntityManager.MinionsAndMonsters.GetLineFarmLocation(
-                        EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => m.IsKillable(Q.Range)), Q.Width,
-                        (int)Q.Range);
-                if (linefarmloc.HitNumber >= Settings.useQminions)
-                {
-                    Q.Cast(linefarmloc.CastPosition);
-                }
+                
+                    Q.CastOnBestFarmPosition(Settings.useQminions);
             }
 
             if (W.IsReady() && Settings.useW && Player.Instance.ManaPercent > Settings.useQmana && Settings.useWmode == 0)

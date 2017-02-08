@@ -16,23 +16,26 @@ namespace LazyIllaoi2.Modes
         public override void Execute()
         {
             Obj_AI_Base enemyQ = TargetSelector.GetTarget(Q.Range, DamageType.Physical);
+            Obj_AI_Base enemyW = TargetSelector.GetTarget(W.Range, DamageType.Physical);
+            var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Physical);
 
             if (Events.Ghost != null && enemyQ == null)
             {
                 if (Events.Ghost.Distance(Player.Instance.ServerPosition) < Q.Range)
-                enemyQ = Events.Ghost;
+                {
+                    enemyQ = Events.Ghost;
+                }
             }
-
-            Obj_AI_Base enemyW = TargetSelector.GetTarget(W.Range, DamageType.Physical);
 
             if (Events.Ghost != null && enemyW == null)
             {
                 if (Events.Ghost.Distance(Player.Instance.ServerPosition) < W.Range)
+                {
                     enemyW = Events.Ghost;
+                }
             }
 
-            var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Physical);
-
+            
             if (Q.IsReady() && Settings.useQ && Player.Instance.ManaPercent > Settings.useQmana)
             {
                 if (enemyQ != null)
@@ -45,7 +48,7 @@ namespace LazyIllaoi2.Modes
                         {
                             if (Events.Ghost != null)
                             {
-                                var qPoly = new Geometry.Polygon.Rectangle((Vector2)Player.Instance.ServerPosition,
+                                var qPoly = new Geometry.Polygon.Rectangle((Vector2) Player.Instance.ServerPosition,
                                     Player.Instance.ServerPosition.Extend(Events.Ghost.ServerPosition,
                                         Q.Range), Q.Width);
 
@@ -89,7 +92,10 @@ namespace LazyIllaoi2.Modes
 
             if (E.IsReady() && Settings.useE && Player.Instance.ManaPercent > Settings.useEmana)
             {
-                if (enemyE == null) return;
+                if (enemyE == null)
+                {
+                    return;
+                }
                 {
                     var predPos = SpellManager.E.GetPrediction(enemyE);
 
@@ -101,12 +107,17 @@ namespace LazyIllaoi2.Modes
             }
 
             if (!R.IsReady() || !Settings.useR || !(Player.Instance.ManaPercent > Settings.useRmana) ||
-                Player.Instance.CountEnemiesInRange(R.Range) < Settings.useRenemySlider) return;
+                Player.Instance.CountEnemyChampionsInRange(R.Range) < Settings.useRenemySlider)
+            {
+                return;
+            }
             {
                 if (Events.Ghost != null && Settings.useRmode == 1)
                 {
                     if (Player.Instance.ServerPosition.Distance(Events.Ghost.ServerPosition) <= R.Range)
-                    R.Cast();
+                    {
+                        R.Cast();
+                    }
                 }
 
                 if (Settings.useRmode == 0)

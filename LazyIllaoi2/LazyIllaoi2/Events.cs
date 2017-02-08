@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Rendering;
@@ -20,9 +21,27 @@ namespace LazyIllaoi2
     {
         public static List<Obj_AI_Base> TentacleList = new List<Obj_AI_Base>();
         public static Obj_AI_Minion Ghost;
+        public static AIHeroClient EnemyW;
+
+        public static void LockQ()
+        {
+            if (EnemyW != null && SpellManager.W.IsReady() && EnemyW.ServerPosition.IsInTentacleRange())
+            {
+                Obj_AI_Base.OnProcessSpellCast += delegate (Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+                {
+                    if (sender.IsMe && args.Slot == SpellSlot.Q)
+                    {
+                        args.Process = false;
+                    }
+                };
+            }
+
+        }
 
         static Events()
         {
+            LockQ();
+
             Game.OnTick += delegate
             {
                 Ghost = ObjectManager.Get<Obj_AI_Minion>()
@@ -32,8 +51,10 @@ namespace LazyIllaoi2
                 {
                     Player.SetSkinId(SkinSettings.skinID);
                 }
-            };
 
+                EnemyW = TargetSelector.GetTarget(SpellManager.W.Range, DamageType.Physical);
+            };
+            
             Obj_AI_Base.OnSpellCast += delegate (Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
             {
                 if (sender.IsMe && args.Slot == SpellSlot.W)

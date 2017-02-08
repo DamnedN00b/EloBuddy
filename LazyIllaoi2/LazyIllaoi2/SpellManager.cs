@@ -24,7 +24,7 @@ namespace LazyIllaoi2
 
             if (e != null) E = new Spell.Skillshot(SpellSlot.E, (uint)e.Range, SkillShotType.Linear, (int)e.Delay, (int?)e.MissileSpeed, (int?)e.Radius * 2);
             {
-                E.AllowedCollisionCount = 0;
+                E.AllowedCollisionCount = -1;
                 E.MinimumHitChance = HitChance.High;
             }
 
