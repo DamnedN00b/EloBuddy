@@ -21,4 +21,3 @@ C:\Users\Kappa\Documents\Visual Studio 2015\Projects\LazyIllaoi2\LazyIllaoi2\bin
 C:\Users\Kappa\Documents\Visual Studio 2015\Projects\LazyIllaoi2\LazyIllaoi2\bin\Release\SharpDX.dll
 C:\Users\Kappa\Documents\Visual Studio 2015\Projects\LazyIllaoi2\LazyIllaoi2\bin\Release\EloBuddy.Sandbox.dll
 C:\Users\Kappa\Documents\Visual Studio 2015\Projects\LazyIllaoi2\LazyIllaoi2\bin\Release\Newtonsoft.Json.dll
-C:\Users\Kappa\Documents\Visual Studio 2015\Projects\LazyIllaoi2\LazyIllaoi2\obj\Release\LazyIllaoi2.csprojResolveAssemblyReference.cache

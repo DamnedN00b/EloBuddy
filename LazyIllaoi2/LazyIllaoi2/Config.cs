@@ -123,7 +123,7 @@ namespace LazyIllaoi2
                     _useWtentacles = ComboMenu.Add("useWtentacles", new CheckBox("Only with Tentacles in Range"));
                     ComboMenu.AddSeparator(20);
 
-                    _useWmode = ComboMenu.Add("useWmode", new ComboBox("W Mode:", 1, "Always", "After Attack"));
+                    _useWmode = ComboMenu.Add("useWmode", new ComboBox("W Mode:", 0, "Always", "After Attack"));
                     ComboMenu.AddSeparator(20);
 
                     _useWmana = ComboMenu.Add("useWmana", new Slider("If Mana % > {0}", 0, 0, 100));
@@ -185,7 +185,7 @@ namespace LazyIllaoi2
                     _useQ = HarassMenu.Add("useQ", new CheckBox("Use Q"));
                     HarassMenu.AddSeparator(20);
 
-                    _useQmode = HarassMenu.Add("useQmode", new ComboBox("Q Mode:", 1, "Always", "Only with Ghost"));
+                    _useQmode = HarassMenu.Add("useQmode", new ComboBox("Q Mode:", 0, "Always", "Only with Ghost"));
                     HarassMenu.AddSeparator(20);
 
                     _useQmana = HarassMenu.Add("useQmana", new Slider("If Mana % > {0}", 60, 0, 100));
@@ -197,13 +197,13 @@ namespace LazyIllaoi2
                     _useWtentacles = HarassMenu.Add("useWtentacles", new CheckBox("Only with Tentacles in Range"));
                     HarassMenu.AddSeparator(20);
 
-                    _useWmode = HarassMenu.Add("useWmode", new ComboBox("W Mode:", 1, "Always", "After Attack"));
+                    _useWmode = HarassMenu.Add("useWmode", new ComboBox("W Mode:", 0, "Always", "After Attack"));
                     HarassMenu.AddSeparator(20);
 
                     _useWmana = HarassMenu.Add("useWmana", new Slider("If Mana % > {0}", 60, 0, 100));
                     HarassMenu.AddSeparator(50);
 
-                    _useE = HarassMenu.Add("useE", new CheckBox("Use E"));
+                    _useE = HarassMenu.Add("useE", new CheckBox("Use E", false));
                     HarassMenu.AddSeparator(20);
 
                     _useEmana = HarassMenu.Add("useEmana", new Slider("If Mana % > {0}", 60, 0, 100));
@@ -265,7 +265,7 @@ namespace LazyIllaoi2
                     _useWtentacles = LaneClearMenu.Add("useWtentacles", new CheckBox("Only with Tentacles in Range"));
                     LaneClearMenu.AddSeparator(20);
 
-                    _useWmode = LaneClearMenu.Add("useWmode", new ComboBox("W Mode:", 0, "Always", "Afterattack"));
+                    _useWmode = LaneClearMenu.Add("useWmode", new ComboBox("W Mode:", 1, "Always", "Afterattack"));
                     LaneClearMenu.AddSeparator(20);
 
                     _useWmana = LaneClearMenu.Add("useWmana", new Slider("If Mana % > {0}", 80, 0, 100));
