@@ -1,5 +1,4 @@
 # EloBuddy
 EloBuddy Addons
 
-Reworked versions of existing Addons soon'ish
-stay tuned :^)
+Free Addons here. If you want me to update something, let me know :)
