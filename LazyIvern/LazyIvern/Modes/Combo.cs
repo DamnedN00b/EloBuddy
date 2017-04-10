@@ -20,7 +20,6 @@ namespace LazyIvern.Modes
             var enemyE = TargetSelector.GetTarget(E.Range, DamageType.Magical);
             var enemyJq = EntityManager.Heroes.Enemies.FirstOrDefault(x => x.HasBuff("IvernQ") && x.IsKillable());
 
-
             if (enemyJq != null && Config.Modes.PermaActive.jumpTarget && !PermActive.Jumped && Config.Modes.PermaActive.jumpOnlyCombo &&
                 Config.Modes.PermaActive.jumpEnemiesCount <= enemyQ.CountEnemyChampionsInRange(900) && !enemyQ.IsUnderHisturret())
             {
@@ -60,19 +59,12 @@ namespace LazyIvern.Modes
 
             if (E.IsReady() && Settings.useE && Player.Instance.ManaPercent > Settings.useEmana)
             {
-                if (enemyE == null) return;
+                foreach (
+                    var alliedUnit in
+                        EntityManager.Heroes.Enemies.Where(x => x.IsKillable(SpellManager.E.Range + 300))
+                            .SelectMany(enemy => EntityManager.Allies.Where(x => x.IsKillable(E.Range) && x.IsHPBarRendered && !x.IsMinion && !x.IsMonster && x.IsInRange(enemy, 300))))
                 {
-                    foreach (
-                        var ally in EntityManager.Heroes.Allies.Where(a => a.IsKillable(E.Range) &&
-                                                                           a.IsInRange(enemyE, 300)))
-                    {
-                        E.Cast(ally);
-                    }
-
-                    if (Events.Daisy != null && Events.Daisy.IsInRange(Player.Instance, E.Range) && Events.Daisy.IsInRange(enemyE, 300))
-                    {
-                        E.Cast(Events.Daisy);
-                    }
+                    SpellManager.E.Cast(alliedUnit);
                 }
             }
         }
