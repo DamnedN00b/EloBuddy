@@ -18,7 +18,10 @@ namespace LazyXayah.Modes
         {
             if (!Orbwalker.IsAutoAttacking)
             {
-                
+                if (Settings.UseQ && SpellManager.Q.IsReady())
+                {
+                    SpellManager.Q.CastOnBestFarmPosition();
+                }
             }
         }
     }

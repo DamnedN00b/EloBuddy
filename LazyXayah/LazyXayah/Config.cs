@@ -20,11 +20,11 @@ namespace LazyXayah
             Menu = MainMenu.AddMenu(MenuName, MenuName.ToLower());
 
             ComboMenu.Initializer();
-            //HarassMenu.Initializer();
-            //LaneClearMenu.Initializer();
-            //JungleClearMenu.Initializer();
-            //FleeMenu.Initializer();
-            //MiscMenu.Initializer();
+            HarassMenu.Initializer();
+            LaneClearMenu.Initializer();
+            JungleClearMenu.Initializer();
+            FleeMenu.Initializer();
+            MiscMenu.Initializer();
             //LastHitMenu.Initializer();
             DrawMenu.Initializer();
             SkinMenu.Initializer();
@@ -42,7 +42,6 @@ namespace LazyXayah
             public static int AOEE => comboMenu["Combo.AOEE"].Cast<Slider>().CurrentValue;
             public static bool KSE => comboMenu["Combo.KSE"].Cast<CheckBox>().CurrentValue;
             public static bool UseR => comboMenu["Combo.UseR"].Cast<CheckBox>().CurrentValue;
-            public static bool BlockR => comboMenu["Combo.BlockR"].Cast<CheckBox>().CurrentValue;
             public static int AOER => comboMenu["Combo.AOER"].Cast<Slider>().CurrentValue;
 
             public static void Initializer()
@@ -53,19 +52,19 @@ namespace LazyXayah
             {
                 comboMenu = Menu.AddSubMenu("Combo");
 
-                comboMenu.Add("label3", new Label("Q usage:"));
+                comboMenu.Add("label", new Label("Q usage:"));
                 comboMenu.AddSeparator(10);
                 comboMenu.Add("Combo.UseQ", new CheckBox("Use Q"));
 
                 comboMenu.AddSeparator();
 
-                comboMenu.Add("label6", new Label("W usage:"));
+                comboMenu.Add("label", new Label("W usage:"));
                 comboMenu.AddSeparator(10);
                 comboMenu.Add("Combo.UseW", new CheckBox("Use W"));
 
                 comboMenu.AddSeparator();
 
-                comboMenu.Add("label4", new Label("E usage:"));
+                comboMenu.Add("label", new Label("E usage:"));
                 comboMenu.AddSeparator(10);
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
                 {
@@ -78,7 +77,7 @@ namespace LazyXayah
 
                 comboMenu.AddSeparator();
 
-                comboMenu.Add("label5", new Label("R usage:"));
+                comboMenu.Add("label", new Label("R usage:"));
                 comboMenu.AddSeparator(10);
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
                 {
@@ -86,7 +85,6 @@ namespace LazyXayah
                     comboMenu.AddSeparator(10);
                 }
                 comboMenu.Add("Combo.AOER", new Slider("Auto Ult {0} enemies", 4, 1, 6));
-                comboMenu.Add("Combo.BlockR", new CheckBox("Block Movement in R animation", false));
 
                 comboMenu.AddSeparator();
             }
@@ -114,7 +112,11 @@ namespace LazyXayah
 
         public static class HarassMenu
         {
-            private static readonly Menu harassMenu;
+            public static readonly Menu harassMenu;
+            public static bool UseQ => harassMenu["Harass.UseQ"].Cast<CheckBox>().CurrentValue;
+            public static bool UseW => harassMenu["Harass.UseW"].Cast<CheckBox>().CurrentValue;
+            public static int AOEE => harassMenu["Harass.AOEE"].Cast<Slider>().CurrentValue;
+            public static bool KSE => harassMenu["Harass.KSE"].Cast<CheckBox>().CurrentValue;
 
             public static void Initializer()
             {
@@ -124,12 +126,37 @@ namespace LazyXayah
             {
                 harassMenu = Menu.AddSubMenu("Harass");
 
+                harassMenu.Add("label", new Label("Q usage:"));
+                harassMenu.AddSeparator(10);
+                harassMenu.Add("Harass.UseQ", new CheckBox("Use Q"));
+
+                harassMenu.AddSeparator();
+
+                harassMenu.Add("label", new Label("W usage:"));
+                harassMenu.AddSeparator(10);
+                harassMenu.Add("Harass.UseW", new CheckBox("Use W"));
+
+                harassMenu.AddSeparator();
+
+                harassMenu.Add("label", new Label("E usage:"));
+                harassMenu.AddSeparator(10);
+                foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
+                {
+                    harassMenu.Add("Harass.UseE" + enemy.ChampionName, new CheckBox("Stun " + enemy.ChampionName, false));
+                    harassMenu.AddSeparator(10);
+                }
+                harassMenu.Add("Harass.AOEE", new Slider("Auto Stun {0} enemies", 2, 1, 6));
+                harassMenu.AddSeparator(15);
+                harassMenu.Add("Harass.KSE", new CheckBox("Try to KS with E"));
+
+                harassMenu.AddSeparator();
             }
         }
 
         public static class LaneClearMenu
         {
             private static readonly Menu laneClearMenu;
+            public static bool UseQ => laneClearMenu["LC.UseQ"].Cast<CheckBox>().CurrentValue;
 
             public static void Initializer()
             {
@@ -138,12 +165,18 @@ namespace LazyXayah
             static LaneClearMenu()
             {
                 laneClearMenu = Menu.AddSubMenu("LaneClear");
+
+                laneClearMenu.Add("label", new Label("Q usage:"));
+                laneClearMenu.AddSeparator(10);
+                laneClearMenu.Add("LC.UseQ", new CheckBox("Use Q"));
             }
         }
 
         public static class JungleClearMenu
         {
-            private static readonly Menu jungleClearMenu;
+            public static readonly Menu jungleClearMenu;
+            public static bool UseQ => jungleClearMenu["JC.UseQ"].Cast<CheckBox>().CurrentValue;
+            public static bool UseW => jungleClearMenu["JC.UseW"].Cast<CheckBox>().CurrentValue;
 
             public static void Initializer()
             {
@@ -152,6 +185,12 @@ namespace LazyXayah
             static JungleClearMenu()
             {
                 jungleClearMenu = Menu.AddSubMenu("JungleClear");
+
+                jungleClearMenu.Add("label", new Label("Q usage:"));
+                jungleClearMenu.AddSeparator(10);
+                jungleClearMenu.Add("JC.UseQ", new CheckBox("Use Q"));
+                jungleClearMenu.Add("JC.UseW", new CheckBox("Use W"));
+                //jungleClearMenu.Add("JC.UseE", new CheckBox("Use E")); TODO: check if passive rdy
             }
         }
 
@@ -170,7 +209,12 @@ namespace LazyXayah
 
         public static class MiscMenu
         {
-            private static readonly Menu miscMenu;
+            public static readonly Menu miscMenu;
+            public static int AOEE => miscMenu["Combo.AOEE"].Cast<Slider>().CurrentValue;
+            public static bool KSE => miscMenu["Combo.KSE"].Cast<CheckBox>().CurrentValue;
+            public static bool UseR => miscMenu["Combo.UseR"].Cast<CheckBox>().CurrentValue;
+            public static bool BlockR => miscMenu["Combo.BlockR"].Cast<CheckBox>().CurrentValue;
+            public static int AOER => miscMenu["Combo.AOER"].Cast<Slider>().CurrentValue;
 
             public static void Initializer()
             {
@@ -180,6 +224,30 @@ namespace LazyXayah
             {
                 miscMenu = Menu.AddSubMenu("Misc");
 
+                miscMenu.Add("label", new Label("Auto E usage:"));
+                miscMenu.AddSeparator(10);
+                foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
+                {
+                    miscMenu.Add("Misc.UseE" + enemy.ChampionName, new CheckBox("Auto Stun " + enemy.ChampionName, false));
+                    miscMenu.AddSeparator(10);
+                }
+                miscMenu.Add("Misc.AOEE", new Slider("Auto Stun {0} enemies", 2, 1, 6));
+                miscMenu.AddSeparator(15);
+                miscMenu.Add("Misc.KSE", new CheckBox("Auto KS with E"));
+
+                miscMenu.AddSeparator();
+
+                miscMenu.Add("label", new Label("Auto R usage:"));
+                miscMenu.AddSeparator(10);
+                foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
+                {
+                    miscMenu.Add("Misc.UseR" + enemy.ChampionName, new CheckBox("Ult " + enemy.ChampionName + " if killable", false));
+                    miscMenu.AddSeparator(10);
+                }
+                miscMenu.Add("Misc.AOER", new Slider("Auto Ult {0} enemies", 4, 1, 6));
+                miscMenu.Add("Misc.BlockR", new CheckBox("Block Movement in R animation", false));
+
+                miscMenu.AddSeparator();
             }
         }
 

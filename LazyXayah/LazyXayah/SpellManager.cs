@@ -88,7 +88,7 @@ namespace LazyXayah
             }
         }
 
-        public static void CastEmultiStun()
+        public static void CastEmultiStun(int count)
         {
             if (E.IsReady())
             {
@@ -99,7 +99,7 @@ namespace LazyXayah
                     eTargets.Add(e);
                 }
 
-                if (eTargets.Count >= Settings.AOEE)
+                if (eTargets.Count >= count)
                 {
                     E.Cast();
                 }
@@ -113,10 +113,10 @@ namespace LazyXayah
             public Geometry.Polygon poly;
         }
 
-        public static void CastRAOE()
+        public static void CastRAOE(int count)
         {
             var targets = EntityManager.Heroes.Enemies.FindAll(e => e.IsKillable(R.Range, true));
-            if (targets.Count >= Settings.AOER)
+            if (targets.Count >= count)
             {
                 var results =
                     targets.Select(t => new Geometry.Polygon.Sector(Player.Instance.ServerPosition, R.GetPrediction(t).CastPosition, (float)(R.ConeAngleDegrees * Math.PI / 180), R.Range))
@@ -126,7 +126,7 @@ namespace LazyXayah
                 var bestHits = results.OrderByDescending(e => e.hits).FirstOrDefault(r => r.hits >= 4);
                 if (bestHits != null)
                 {
-                    if (Settings.BlockR)
+                    if (Config.MiscMenu.BlockR)
                     {
                         Orbwalker.DisableMovement = true;
                         R.Cast(bestHits.castPos);
@@ -148,7 +148,7 @@ namespace LazyXayah
 
                 if (pred.HitChance > HitChance.Medium)
                 {
-                    if (Settings.BlockR)
+                    if (Config.MiscMenu.BlockR)
                     {
                         Orbwalker.DisableMovement = true;
                         R.Cast(pred.CastPosition);

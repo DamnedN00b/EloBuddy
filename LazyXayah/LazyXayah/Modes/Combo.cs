@@ -48,12 +48,9 @@ namespace LazyXayah.Modes
                     }
                 }
 
-                SpellManager.CastEmultiStun();
+                SpellManager.CastEmultiStun(Settings.AOEE);
 
-                SpellManager.CastRAOE();
-
-
-
+                SpellManager.CastRAOE(Settings.AOER);
             }
         }
     }

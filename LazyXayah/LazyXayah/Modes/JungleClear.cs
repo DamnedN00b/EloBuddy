@@ -16,7 +16,19 @@ namespace LazyXayah.Modes
         {
             if (!Orbwalker.IsAutoAttacking)
             {
-                
+                var monster = EntityManager.MinionsAndMonsters.Monsters.FirstOrDefault(x => x.IsValidTarget(Player.Instance.GetAutoAttackRange(x)));
+
+                if (monster != null)
+                {
+                    if (Settings.UseQ && SpellManager.Q.IsReady())
+                    {
+                        SpellManager.Q.Cast(monster);
+                    }
+                    if (Settings.UseW && SpellManager.W.IsReady())
+                    {
+                        SpellManager.W.Cast();
+                    }
+                }
             }
         }
     }
