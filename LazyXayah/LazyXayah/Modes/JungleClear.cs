@@ -20,11 +20,11 @@ namespace LazyXayah.Modes
 
                 if (monster != null)
                 {
-                    if (Settings.UseQ && SpellManager.Q.IsReady())
+                    if (Settings.UseQ && SpellManager.Q.IsReady() && Player.Instance.ManaPercent > Settings.Qmana)
                     {
                         SpellManager.Q.Cast(monster);
                     }
-                    if (Settings.UseW && SpellManager.W.IsReady())
+                    if (Settings.UseW && SpellManager.W.IsReady() && Player.Instance.ManaPercent > Settings.Wmana)
                     {
                         SpellManager.W.Cast();
                     }

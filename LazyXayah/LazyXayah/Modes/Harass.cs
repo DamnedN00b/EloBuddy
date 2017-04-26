@@ -1,4 +1,6 @@
-﻿using EloBuddy.SDK;
+﻿using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Menu.Values;
 using Settings = LazyXayah.Config.HarassMenu;
 
@@ -15,13 +17,29 @@ namespace LazyXayah.Modes
         {
             if (!Orbwalker.IsAutoAttacking)
             {
-                if (Settings.UseQ)
+                if (Settings.UseQ && Player.Instance.ManaPercent > Settings.Qmana)
                 {
-                    SpellManager.CastQ();
+                    if (Settings.QHC == 0)
+                    {
+                        SpellManager.CastQ(HitChance.Low);
+                    }
+                    if (Settings.QHC == 1)
+                    {
+                        SpellManager.CastQ(HitChance.Medium);
+                    }
+                    if (Settings.QHC == 2)
+                    {
+                        SpellManager.CastQ(HitChance.High);
+                    }
                 }
-                if (Settings.UseW)
+                if (Settings.UseW && Player.Instance.ManaPercent > Settings.Wmana)
                 {
                     SpellManager.CastW();
+                }
+
+                if (Player.Instance.ManaPercent < Settings.Emana)
+                {
+                    return;
                 }
 
                 foreach (var t in EntityManager.Heroes.Enemies)

@@ -21,17 +21,38 @@ namespace LazyXayah.Modes
         {
             if (!Orbwalker.IsAutoAttacking)
             {
-                if (Settings.UseQ)
+                if (Settings.UseQ && Player.Instance.ManaPercent > Settings.Qmana)
                 {
-                    SpellManager.CastQ();
+                    if (Settings.QHC == 0)
+                    {
+                        SpellManager.CastQ(HitChance.Low);
+                    }
+                    if (Settings.QHC == 1)
+                    {
+                        SpellManager.CastQ(HitChance.Medium);
+                    }
+                    if (Settings.QHC == 2)
+                    {
+                        SpellManager.CastQ(HitChance.High);
+                    }
                 }
-                if (Settings.UseW)
+                if (Settings.UseW && Player.Instance.ManaPercent > Settings.Wmana)
                 {
                     SpellManager.CastW();
                 }
 
                 foreach (var t in EntityManager.Heroes.Enemies)
                 {
+                    if (Settings.comboMenu["Combo.UseR" + t.ChampionName].Cast<CheckBox>().CurrentValue)
+                    {
+                        SpellManager.CastRkillable(t);
+                    }
+
+                    if (Player.Instance.ManaPercent < Settings.Emana)
+                    {
+                        return;
+                    }
+
                     if (Settings.comboMenu["Combo.UseE" + t.ChampionName].Cast<CheckBox>().CurrentValue)
                     {
                         SpellManager.CastEstun(t);
@@ -41,14 +62,12 @@ namespace LazyXayah.Modes
                     {
                         SpellManager.CastEkill(t);
                     }
-
-                    if (Settings.comboMenu["Combo.UseR" + t.ChampionName].Cast<CheckBox>().CurrentValue)
-                    {
-                        SpellManager.CastRkillable(t);
-                    }
                 }
 
-                SpellManager.CastEmultiStun(Settings.AOEE);
+                if (Player.Instance.ManaPercent > Settings.Emana)
+                {
+                    SpellManager.CastEmultiStun(Settings.AOEE);
+                }
 
                 SpellManager.CastRAOE(Settings.AOER);
             }

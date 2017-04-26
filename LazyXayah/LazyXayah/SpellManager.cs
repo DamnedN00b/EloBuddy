@@ -43,13 +43,13 @@ namespace LazyXayah
         {
         }
 
-        public static void CastQ()
+        public static void CastQ(HitChance hitchance)
         {
             var target = TargetSelector.GetTarget(Q.Range - 50, DamageType.Physical, null, true);
 
             if (Q.IsReady() && target.IsKillable(Q.Range))
             {
-                if (Q.GetPrediction(target).HitChance > HitChance.Low)
+                if (Q.GetPrediction(target).HitChance >= hitchance)
                 {
                     Q.Cast(target);
                 }

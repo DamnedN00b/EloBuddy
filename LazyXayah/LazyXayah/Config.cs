@@ -38,11 +38,15 @@ namespace LazyXayah
         {
             public static readonly Menu comboMenu;
             public static bool UseQ => comboMenu["Combo.UseQ"].Cast<CheckBox>().CurrentValue;
+            public static int Qmana => comboMenu["Combo.Qmana"].Cast<Slider>().CurrentValue;
             public static bool UseW => comboMenu["Combo.UseW"].Cast<CheckBox>().CurrentValue;
+            public static int Wmana => comboMenu["Combo.Wmana"].Cast<Slider>().CurrentValue;
             public static int AOEE => comboMenu["Combo.AOEE"].Cast<Slider>().CurrentValue;
             public static bool KSE => comboMenu["Combo.KSE"].Cast<CheckBox>().CurrentValue;
+            public static int Emana => comboMenu["Combo.Emana"].Cast<Slider>().CurrentValue;
             public static bool UseR => comboMenu["Combo.UseR"].Cast<CheckBox>().CurrentValue;
             public static int AOER => comboMenu["Combo.AOER"].Cast<Slider>().CurrentValue;
+            public static int QHC => comboMenu["Combo.QHC"].Cast<ComboBox>().CurrentValue;
 
             public static void Initializer()
             {
@@ -55,16 +59,19 @@ namespace LazyXayah
                 comboMenu.Add("label", new Label("Q usage:"));
                 comboMenu.AddSeparator(10);
                 comboMenu.Add("Combo.UseQ", new CheckBox("Use Q"));
+                comboMenu.Add("Combo.Qmana", new Slider("if Mana more than {0} %"));
+                comboMenu.Add("Combo.QHC", new ComboBox("Hitchance: ", 1, "Low", "Medium", "High"));
 
                 comboMenu.AddSeparator();
 
-                comboMenu.Add("label", new Label("W usage:"));
+                comboMenu.Add("label1", new Label("W usage:"));
                 comboMenu.AddSeparator(10);
                 comboMenu.Add("Combo.UseW", new CheckBox("Use W"));
+                comboMenu.Add("Combo.Wmana", new Slider("if Mana more than {0} %", 25));
 
                 comboMenu.AddSeparator();
 
-                comboMenu.Add("label", new Label("E usage:"));
+                comboMenu.Add("label2", new Label("E usage:"));
                 comboMenu.AddSeparator(10);
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
                 {
@@ -74,10 +81,11 @@ namespace LazyXayah
                 comboMenu.Add("Combo.AOEE", new Slider("Auto Stun {0} enemies", 2, 1, 6));
                 comboMenu.AddSeparator(15);
                 comboMenu.Add("Combo.KSE", new CheckBox("Try to KS with E"));
+                comboMenu.Add("Combo.Emana", new Slider("Use E if Mana more than {0} %"));
 
                 comboMenu.AddSeparator();
 
-                comboMenu.Add("label", new Label("R usage:"));
+                comboMenu.Add("label3", new Label("R usage:"));
                 comboMenu.AddSeparator(10);
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
                 {
@@ -114,9 +122,13 @@ namespace LazyXayah
         {
             public static readonly Menu harassMenu;
             public static bool UseQ => harassMenu["Harass.UseQ"].Cast<CheckBox>().CurrentValue;
+            public static int Qmana => harassMenu["Harass.Qmana"].Cast<Slider>().CurrentValue;
             public static bool UseW => harassMenu["Harass.UseW"].Cast<CheckBox>().CurrentValue;
+            public static int Wmana => harassMenu["Harass.Wmana"].Cast<Slider>().CurrentValue;
             public static int AOEE => harassMenu["Harass.AOEE"].Cast<Slider>().CurrentValue;
             public static bool KSE => harassMenu["Harass.KSE"].Cast<CheckBox>().CurrentValue;
+            public static int Emana => harassMenu["Harass.Emana"].Cast<Slider>().CurrentValue;
+            public static int QHC => harassMenu["Harass.QHC"].Cast<ComboBox>().CurrentValue;
 
             public static void Initializer()
             {
@@ -129,16 +141,19 @@ namespace LazyXayah
                 harassMenu.Add("label", new Label("Q usage:"));
                 harassMenu.AddSeparator(10);
                 harassMenu.Add("Harass.UseQ", new CheckBox("Use Q"));
+                harassMenu.Add("Harass.Qmana", new Slider("if Mana more than {0} %"));
+                harassMenu.Add("Harass.QHC", new ComboBox("Hitchance: ", 1, "Low", "Medium", "High"));
 
                 harassMenu.AddSeparator();
 
-                harassMenu.Add("label", new Label("W usage:"));
+                harassMenu.Add("label1", new Label("W usage:"));
                 harassMenu.AddSeparator(10);
                 harassMenu.Add("Harass.UseW", new CheckBox("Use W"));
+                harassMenu.Add("Harass.Wmana", new Slider("if Mana more than {0} %", 25));
 
                 harassMenu.AddSeparator();
 
-                harassMenu.Add("label", new Label("E usage:"));
+                harassMenu.Add("label2", new Label("E usage:"));
                 harassMenu.AddSeparator(10);
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
                 {
@@ -148,6 +163,7 @@ namespace LazyXayah
                 harassMenu.Add("Harass.AOEE", new Slider("Auto Stun {0} enemies", 2, 1, 6));
                 harassMenu.AddSeparator(15);
                 harassMenu.Add("Harass.KSE", new CheckBox("Try to KS with E"));
+                harassMenu.Add("Harass.Emana", new Slider("Use E if Mana more than {0} %"));
 
                 harassMenu.AddSeparator();
             }
@@ -157,6 +173,10 @@ namespace LazyXayah
         {
             private static readonly Menu laneClearMenu;
             public static bool UseQ => laneClearMenu["LC.UseQ"].Cast<CheckBox>().CurrentValue;
+            public static int Qmana => laneClearMenu["LC.Qmana"].Cast<Slider>().CurrentValue;
+            public static bool UseE => laneClearMenu["LC.UseE"].Cast<CheckBox>().CurrentValue;
+            public static int Emana => laneClearMenu["LC.Emana"].Cast<Slider>().CurrentValue;
+            public static int Eminions => laneClearMenu["LC.Eminions"].Cast<Slider>().CurrentValue;
 
             public static void Initializer()
             {
@@ -169,6 +189,13 @@ namespace LazyXayah
                 laneClearMenu.Add("label", new Label("Q usage:"));
                 laneClearMenu.AddSeparator(10);
                 laneClearMenu.Add("LC.UseQ", new CheckBox("Use Q"));
+                laneClearMenu.Add("LC.Qmana", new Slider("if Mana more than {0} %", 40));
+                laneClearMenu.AddSeparator();
+                laneClearMenu.Add("label1", new Label("E usage:"));
+                laneClearMenu.AddSeparator(10);
+                laneClearMenu.Add("LC.UseE", new CheckBox("Use E"));
+                laneClearMenu.Add("LC.Eminions", new Slider("if it kills {0} minions", 3, 1, 7));
+                laneClearMenu.Add("LC.Emana", new Slider("and Mana more than {0} %", 40));
             }
         }
 
@@ -176,7 +203,9 @@ namespace LazyXayah
         {
             public static readonly Menu jungleClearMenu;
             public static bool UseQ => jungleClearMenu["JC.UseQ"].Cast<CheckBox>().CurrentValue;
+            public static int Qmana => jungleClearMenu["JC.Qmana"].Cast<Slider>().CurrentValue;
             public static bool UseW => jungleClearMenu["JC.UseW"].Cast<CheckBox>().CurrentValue;
+            public static int Wmana => jungleClearMenu["JC.Wmana"].Cast<Slider>().CurrentValue;
 
             public static void Initializer()
             {
@@ -190,7 +219,7 @@ namespace LazyXayah
                 jungleClearMenu.AddSeparator(10);
                 jungleClearMenu.Add("JC.UseQ", new CheckBox("Use Q"));
                 jungleClearMenu.Add("JC.UseW", new CheckBox("Use W"));
-                //jungleClearMenu.Add("JC.UseE", new CheckBox("Use E")); TODO: check if passive rdy
+                //jungleClearMenu.Add("JC.UseE", new CheckBox("Use E")); TODO: check if passive rdy 
             }
         }
 
@@ -210,11 +239,11 @@ namespace LazyXayah
         public static class MiscMenu
         {
             public static readonly Menu miscMenu;
-            public static int AOEE => miscMenu["Combo.AOEE"].Cast<Slider>().CurrentValue;
-            public static bool KSE => miscMenu["Combo.KSE"].Cast<CheckBox>().CurrentValue;
-            public static bool UseR => miscMenu["Combo.UseR"].Cast<CheckBox>().CurrentValue;
-            public static bool BlockR => miscMenu["Combo.BlockR"].Cast<CheckBox>().CurrentValue;
-            public static int AOER => miscMenu["Combo.AOER"].Cast<Slider>().CurrentValue;
+            public static int AOEE => miscMenu["Misc.AOEE"].Cast<Slider>().CurrentValue;
+            public static bool KSE => miscMenu["Misc.KSE"].Cast<CheckBox>().CurrentValue;
+            public static bool UseR => miscMenu["Misc.UseR"].Cast<CheckBox>().CurrentValue;
+            public static bool BlockR => miscMenu["Misc.BlockR"].Cast<CheckBox>().CurrentValue;
+            public static int AOER => miscMenu["Misc.AOER"].Cast<Slider>().CurrentValue;
 
             public static void Initializer()
             {
@@ -237,7 +266,7 @@ namespace LazyXayah
 
                 miscMenu.AddSeparator();
 
-                miscMenu.Add("label", new Label("Auto R usage:"));
+                miscMenu.Add("label1", new Label("Auto R usage:"));
                 miscMenu.AddSeparator(10);
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Player.Instance.Team))
                 {
