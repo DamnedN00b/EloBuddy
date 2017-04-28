@@ -218,7 +218,12 @@ namespace LazyXayah
                 jungleClearMenu.Add("label", new Label("Q usage:"));
                 jungleClearMenu.AddSeparator(10);
                 jungleClearMenu.Add("JC.UseQ", new CheckBox("Use Q"));
+                jungleClearMenu.Add("JC.Qmana", new Slider("if Mana more than {0} %"));
+
+                jungleClearMenu.Add("label2", new Label("W usage:"));
                 jungleClearMenu.Add("JC.UseW", new CheckBox("Use W"));
+                jungleClearMenu.Add("JC.Wmana", new Slider("if Mana more than {0} %", 40));
+
                 //jungleClearMenu.Add("JC.UseE", new CheckBox("Use E")); TODO: check if passive rdy 
             }
         }
