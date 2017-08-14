@@ -144,19 +144,22 @@ namespace LazyXayah
         {
             if (target != null && target.Health < Misc.ComboDamage(target))
             {
-                var pred = R.GetPrediction(target);
-
-                if (pred.HitChance > HitChance.Medium)
+                if (Misc.ComboDamageNoR(target) < target.Health)
                 {
-                    if (Config.MiscMenu.BlockR)
+                    var pred = R.GetPrediction(target);
+
+                    if (pred.HitChance > HitChance.Medium)
                     {
-                        Orbwalker.DisableMovement = true;
-                        R.Cast(pred.CastPosition);
-                        Core.DelayAction(() => Orbwalker.DisableMovement = false, 1000);
-                    }
-                    else
-                    {
-                        R.Cast(pred.CastPosition);
+                        if (Config.MiscMenu.BlockR)
+                        {
+                            Orbwalker.DisableMovement = true;
+                            R.Cast(pred.CastPosition);
+                            Core.DelayAction(() => Orbwalker.DisableMovement = false, 1000);
+                        }
+                        else
+                        {
+                            R.Cast(pred.CastPosition);
+                        }
                     }
                 }
             }

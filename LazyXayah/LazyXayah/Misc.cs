@@ -51,6 +51,29 @@ namespace LazyXayah
             return damage;
         }
 
+        public static float ComboDamageNoR(Obj_AI_Base target)
+        {
+            var damage = 0f;
+
+            // AA
+
+            damage += Player.Instance.GetAutoAttackDamage(target, true);
+
+            // Q
+            if (SpellManager.Q.IsReady())
+            {
+                damage += QDmg(target);
+            }
+
+            // E
+            if (SpellManager.E.IsReady())
+            {
+                damage += GetFeatherDamage(target);
+            }
+
+            return damage;
+        }
+
         public static float QDmg(Obj_AI_Base target)
         {
             return Player.Instance.CalculateDamageOnUnit(target, DamageType.Physical,
